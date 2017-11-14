@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_translate"
+
+        android:title="@string/title_fast_translation" />
+
+    <item
+        android:id="@+id/navigation_dictionary"
+
+        android:title="@string/title_open_dictionary" />
+
+    <item
+        android:id="@+id/navigation_learning"
+
+        android:title="@string/title_open_learning" />
+
+</menu>

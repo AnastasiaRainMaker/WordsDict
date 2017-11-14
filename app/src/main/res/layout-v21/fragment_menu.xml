@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.dmitry.wordsdict.main.views.FragmentMenu">
+
+    <!--<TextView-->
+        <!--android:id="@+id/textView"-->
+        <!--android:layout_width="354dp"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginLeft="8dp"-->
+        <!--android:layout_marginRight="8dp"-->
+        <!--android:layout_marginTop="14dp"-->
+        <!--android:textAlignment="center"-->
+        <!--android:text="@string/type_the_word"-->
+        <!--android:textColor="@color/colorPrimary"-->
+        <!--android:textSize="16dp"-->
+        <!--app:layout_constraintLeft_toLeftOf="parent"-->
+        <!--app:layout_constraintRight_toRightOf="parent"-->
+        <!--app:layout_constraintTop_toTopOf="parent"-->
+        <!--android:layout_marginStart="8dp"-->
+        <!--android:layout_marginEnd="8dp" />-->
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/word_input_wrapper"
+        android:layout_width="260dp"
+        android:layout_height="wrap_content"
+        app:hintEnabled="true"
+        android:hint="Введите слово"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="50dp"
+        app:hintTextAppearance="@style/InputHint"
+        app:layout_constraintBottom_toTopOf="@+id/guideline5"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/guideline2"
+        app:layout_constraintTop_toBottomOf="@+id/textView" >
+
+        <EditText
+            android:id="@+id/main_word_editText"
+            android:layout_width="260dp"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="text"
+            />
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.constraint.Guideline
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/guideline"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5"
+        tools:layout_editor_absoluteY="0dp"
+        tools:layout_editor_absoluteX="192dp" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.75"
+        tools:layout_editor_absoluteY="0dp"
+        tools:layout_editor_absoluteX="288dp" />
+
+    <Button
+        android:id="@+id/button_main_do_translate"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="50dp"
+        android:textColor="@color/white"
+        android:background="@drawable/buttot_round"
+        android:text="Ok"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="@+id/guideline2"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline5" />
+
+    <android.support.constraint.Guideline
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/guideline4"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.85" />
+
+    <android.support.constraint.Guideline
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/guideline5"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.2" />
+
+    <ProgressBar
+        android:id="@+id/progress_bar_main"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:visibility="gone"
+        android:indeterminateTint="@color/colorAccent"
+        app:layout_constraintStart_toStartOf="@+id/guideline"
+        android:layout_marginStart="8dp"
+        app:layout_constraintEnd_toStartOf="@+id/guideline"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/trans_editText"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintTop_toTopOf="@+id/trans_editText"
+        android:layout_marginTop="8dp" />
+
+    <EditText
+        android:inputType="textMultiLine"
+        android:id="@+id/trans_editText"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:ems="10"
+        android:textAlignment="center"
+        android:scrollbars="vertical"
+        android:focusable="false"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="0dp"
+        app:layout_constraintTop_toBottomOf="@+id/word_textview_hint" />
+
+    <TextView
+        android:id="@+id/word_textview_hint"
+        android:layout_width="0dp"
+        android:fastScrollEnabled="true"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="24dp"
+        android:textSize="26sp"
+        android:textColor="@color/colorAccent"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/word_input_wrapper" />
+
+    <Button
+        android:id="@+id/advanced_search_button"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="60dp"
+        android:layout_marginEnd="0dp"
+        android:layout_marginStart="0dp"
+        android:background="@drawable/buttot_round"
+        android:text="Расширенный поиск"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="@+id/trans_editText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.458"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</android.support.constraint.ConstraintLayout>

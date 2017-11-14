@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:background="@drawable/word_row_selector"
+    android:layout_height="80dp">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:id="@+id/word_title"
+        android:textAlignment="center"
+        android:text="name"
+        android:layout_weight="1"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="25sp"
+        android:layout_height="wrap_content" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_weight="1"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:id="@+id/word_frequency"
+            android:textAlignment="center"
+            android:layout_weight="1"
+            android:textColor="@color/colorPrimary"
+            android:layout_height="match_parent" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:id="@+id/word_date"
+            android:layout_weight="1"
+            android:textAlignment="center"
+            android:textColor="@color/colorPrimary"
+            android:layout_height="match_parent" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:id="@+id/word_priority"
+            android:layout_weight="1"
+            android:textAlignment="center"
+            android:textColor="@color/colorPrimary"
+            android:layout_height="match_parent" />
+
+    </LinearLayout>
+
+
+
+</LinearLayout>

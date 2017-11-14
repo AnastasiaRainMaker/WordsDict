@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_height="match_parent"
+    android:background="@color/background_main_color"
+    android:id="@+id/learning_main_constraint"
+    android:layout_width="fill_parent">
+
+    <TextView
+        android:id="@+id/learning_word_textview"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="Для изучения необходимо добавить слова в справочник. Для этого воспользуйтесь быстрым переводом."
+        android:textAlignment="center"
+        android:textSize="36sp"
+        android:textColor="@color/colorPrimaryDark"
+        android:gravity="center"
+        android:textColorHighlight="@color/orange"
+        app:layout_constraintBottom_toTopOf="@+id/learning_textView_hint"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/learning_donexfromy_textview" />
+
+
+    <Button
+        android:id="@+id/learning_skip_button"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:layout_marginBottom="4dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="4dp"
+        android:background="@drawable/buttot_round"
+        android:text="Пропустить"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/learning_up_word_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/guideline7" />
+
+    <Button
+        android:id="@+id/learning_check_button"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:layout_marginBottom="4dp"
+        android:layout_marginEnd="4dp"
+        android:layout_marginStart="8dp"
+        android:background="@drawable/buttot_round"
+        android:text="Проверить"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/learning_show_translation_button"
+        app:layout_constraintEnd_toStartOf="@+id/guideline7"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <EditText
+        android:id="@+id/learning_translationedittext"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        app:layout_constraintBottom_toTopOf="@+id/learning_check_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/learning_show_translation_button"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="4dp"
+        android:layout_marginEnd="4dp"
+        android:layout_marginStart="8dp"
+        android:background="@drawable/buttot_round"
+        android:text="Показать перевод"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/guideline7"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/learning_up_word_button"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="4dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="4dp"
+        android:background="@drawable/buttot_round"
+        android:text="@string/learning_up_priority"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/guideline7" />
+
+    <android.support.constraint.Guideline
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/guideline7"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5" />
+
+    <TextView
+        android:id="@+id/learning_textView_hint"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:text="Введите перевод:"
+        app:layout_constraintBottom_toTopOf="@+id/learning_translationedittext"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/learning_donexfromy_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="done x from y"
+        android:textColor="@color/darkred"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+</android.support.constraint.ConstraintLayout>
