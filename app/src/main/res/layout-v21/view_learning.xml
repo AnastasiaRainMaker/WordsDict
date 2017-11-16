@@ -4,11 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_height="match_parent"
-    android:background="@color/background_main_color"
     android:id="@+id/learning_main_constraint"
     android:layout_width="fill_parent">
 
     <TextView
+        android:fontFamily="@font/custom_font3"
         android:id="@+id/learning_word_textview"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -18,7 +18,7 @@
         android:layout_marginTop="8dp"
         android:text="Для изучения необходимо добавить слова в справочник. Для этого воспользуйтесь быстрым переводом."
         android:textAlignment="center"
-        android:textSize="36sp"
+        android:textSize="22sp"
         android:textColor="@color/colorPrimaryDark"
         android:gravity="center"
         android:textColorHighlight="@color/orange"
@@ -30,6 +30,7 @@
 
 
     <Button
+        android:fontFamily="@font/custom_font3"
         android:id="@+id/learning_skip_button"
         android:layout_width="0dp"
         android:layout_height="60dp"
@@ -44,6 +45,7 @@
         app:layout_constraintStart_toStartOf="@+id/guideline7" />
 
     <Button
+        android:fontFamily="@font/custom_font3"
         android:id="@+id/learning_check_button"
         android:layout_width="0dp"
         android:layout_height="60dp"
@@ -58,6 +60,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
+        android:fontFamily="@font/custom_font3"
         android:id="@+id/learning_translationedittext"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -71,6 +74,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
+        android:fontFamily="@font/custom_font3"
         android:id="@+id/learning_show_translation_button"
         android:layout_width="0dp"
         android:layout_height="50dp"
@@ -85,6 +89,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
+        android:fontFamily="@font/custom_font3"
         android:id="@+id/learning_up_word_button"
         android:layout_width="0dp"
         android:layout_height="50dp"
@@ -118,6 +123,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
+        android:fontFamily="@font/custom_font3"
         android:id="@+id/learning_donexfromy_textview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -125,7 +131,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:text="done x from y"
-        android:textColor="@color/darkred"
+        android:textColor="@color/colorAccent"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

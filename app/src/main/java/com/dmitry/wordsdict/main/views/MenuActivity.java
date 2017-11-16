@@ -3,19 +3,34 @@ package com.dmitry.wordsdict.main.views;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.graphics.Point;
+import android.graphics.Typeface;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.SpannableString;
+import android.text.SpannableStringBuilder;
+import android.text.style.ForegroundColorSpan;
+import android.text.style.TextAppearanceSpan;
+import android.util.AttributeSet;
 import android.util.Log;
 import android.view.Display;
+import android.view.InflateException;
+import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.animation.TranslateAnimation;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dmitry.wordsdict.Constants;
@@ -39,20 +54,25 @@ import io.realm.RealmResults;
 
 public class MenuActivity extends AppCompatActivity {
 
+    Toolbar mainToolbar;
+
     private final int FILE_SELECT_CODE = 0;
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
+        invalidateOptionsMenu();
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
-        Toolbar mainToolbar = findViewById(R.id.toolbar_main);
+        mainToolbar = findViewById(R.id.toolbar_main);
         setSupportActionBar(mainToolbar);
         FragmentMenu fragment = new FragmentMenu();
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.menu_frame, fragment)
                 .commit();
+
 
         bottomNavigationView.setOnNavigationItemSelectedListener(
                 item -> {
@@ -97,9 +117,25 @@ public class MenuActivity extends AppCompatActivity {
 //        startActivity(new Intent(MenuActivity.this, FragmentLearningChoice.class));
 //    }
 
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_toolbar, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+
+        Menu toolbarMenu = mainToolbar.getMenu();
+        MenuItem toolbarMenuItem1 = toolbarMenu.findItem(R.id.action_about);
+        MenuItem toolbarMenuItem2 = toolbarMenu.findItem(R.id.action_save);
+        MenuItem toolbarMenuItem3 = toolbarMenu.findItem(R.id.action_send);
+        
+//        Typeface custom_font = Typeface.createFromAsset(getAssets(), "font/custom_font3.ttf");
+//        SpannableStringBuilder title1 = new SpannableStringBuilder(getApplicationContext().getString(R.string.about));
+//        title1.setSpan(custom_font, 0, title1.length(), 0);
+//        toolbarMenuItem1.setTitle(title1);
         return true;
     }
 

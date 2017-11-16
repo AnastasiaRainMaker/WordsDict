@@ -6,7 +6,8 @@
     android:layout_height="match_parent"
     android:background="@color/white"
     tools:context="com.dmitry.wordsdict.main.views.MenuActivity"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    >
 
     <android.support.v7.widget.Toolbar
     android:id="@+id/toolbar_main"
@@ -19,6 +20,7 @@
     android:minHeight="?attr/actionBarSize"
     android:textColor="@color/white"
     android:theme="?attr/actionBarTheme"
+    app:titleTextAppearance="@style/MenuTextAppearance"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toTopOf="parent" />

@@ -24,6 +24,7 @@
         <!--android:layout_marginEnd="8dp" />-->
 
     <android.support.design.widget.TextInputLayout
+        android:fontFamily="@font/custom_font3"
         android:id="@+id/word_input_wrapper"
         android:layout_width="260dp"
         android:layout_height="wrap_content"
@@ -43,6 +44,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView" >
 
         <EditText
+            android:fontFamily="@font/custom_font3"
             android:id="@+id/main_word_editText"
             android:layout_width="260dp"
             android:layout_height="wrap_content"
@@ -70,6 +72,7 @@
         tools:layout_editor_absoluteX="288dp" />
 
     <Button
+        android:fontFamily="@font/custom_font3"
         android:id="@+id/button_main_do_translate"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -119,7 +122,7 @@
         android:layout_marginTop="8dp" />
 
     <EditText
-        android:inputType="textMultiLine"
+        android:fontFamily="@font/custom_font3"
         android:id="@+id/trans_editText"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -127,16 +130,17 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:ems="10"
-        android:textAlignment="center"
-        android:scrollbars="vertical"
         android:focusable="false"
+        android:inputType="textMultiLine"
+        android:scrollbars="vertical"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginTop="0dp"
         app:layout_constraintTop_toBottomOf="@+id/word_textview_hint" />
 
     <TextView
+        android:fontFamily="@font/custom_font3"
         android:id="@+id/word_textview_hint"
         android:layout_width="0dp"
         android:fastScrollEnabled="true"
@@ -152,6 +156,7 @@
         app:layout_constraintTop_toBottomOf="@+id/word_input_wrapper" />
 
     <Button
+        android:fontFamily="@font/custom_font3"
         android:id="@+id/advanced_search_button"
         android:layout_width="0dp"
         android:layout_height="50dp"

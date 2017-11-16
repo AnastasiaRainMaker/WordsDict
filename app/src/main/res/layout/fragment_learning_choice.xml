@@ -27,6 +27,7 @@
         <!--app:layout_constraintTop_toTopOf="parent" />-->
 
     <Button
+        android:fontFamily="@font/custom_font3"
         android:id="@+id/learning_mydict_word_button"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -44,6 +45,7 @@
         app:layout_constraintBottom_toBottomOf="parent" />
 
     <Button
+        android:fontFamily="@font/custom_font3"
         android:id="@+id/learning_random_word_button"
         android:layout_width="0dp"
         android:layout_height="wrap_content"

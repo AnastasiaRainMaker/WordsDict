@@ -10,6 +10,7 @@
         android:orientation="vertical">
 
         <TextView
+            android:fontFamily="@font/custom_font3"
             android:id="@+id/dialog_info"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -21,6 +22,7 @@
             android:padding="16dp"/>
 
         <EditText
+            android:fontFamily="@font/custom_font3"
             android:id="@+id/dialog_add_word_edittext"
             android:layout_height="wrap_content"
             android:textAlignment="center"
@@ -29,6 +31,8 @@
             android:layout_width="match_parent" />
 
         <Button
+            android:fontFamily="@font/custom_font3"
+            android:textColor="@color/white"
             android:id="@+id/dialog_add_word_ok"
             android:layout_height="wrap_content"
             android:text="Ok"

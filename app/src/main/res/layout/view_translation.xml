@@ -9,6 +9,7 @@
         android:layout_height="match_parent">
 
         <EditText
+            android:fontFamily="@font/custom_font3"
             android:inputType="textMultiLine"
             android:id="@+id/word_translation_text"
             android:layout_width="match_parent"

@@ -6,6 +6,7 @@
     android:layout_height="80dp">
 
     <TextView
+        android:fontFamily="@font/custom_font3"
         android:layout_width="match_parent"
         android:id="@+id/word_title"
         android:textAlignment="center"
@@ -22,6 +23,7 @@
         android:layout_height="wrap_content">
 
         <TextView
+            android:fontFamily="@font/custom_font3"
             android:layout_width="match_parent"
             android:id="@+id/word_frequency"
             android:textAlignment="center"
@@ -30,6 +32,7 @@
             android:layout_height="match_parent" />
 
         <TextView
+            android:fontFamily="@font/custom_font3"
             android:layout_width="match_parent"
             android:id="@+id/word_date"
             android:layout_weight="1"
@@ -38,6 +41,7 @@
             android:layout_height="match_parent" />
 
         <TextView
+            android:fontFamily="@font/custom_font3"
             android:layout_width="match_parent"
             android:id="@+id/word_priority"
             android:layout_weight="1"

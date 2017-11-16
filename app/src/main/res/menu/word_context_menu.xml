@@ -5,19 +5,19 @@
     <item
         android:id="@+id/context_word_difficalty_up"
         android:visible="true"
-        app:showAsAction="ifRoom"
+        app:showAsAction="never"
         android:title="@string/context_diff_up" />
 
     <item
         android:id="@+id/context_word_difficalty_down"
         android:visible="true"
-        app:showAsAction="always"
+        app:showAsAction="never"
         android:title="@string/context_diff_down" />
 
     <item
         android:id="@+id/context_delete"
         android:visible="true"
-        app:showAsAction="ifRoom"
+        app:showAsAction="never"
         android:title="@string/context_remove_word" />
 
 

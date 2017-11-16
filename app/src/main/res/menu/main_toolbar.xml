@@ -1,7 +1,8 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <item android:id="@+id/action_about"
+    <item
+        android:id="@+id/action_about"
         android:title="@string/about"
         app:showAsAction="never"/>
 
@@ -10,7 +11,8 @@
         android:title="@string/string_export_to_file"
         app:showAsAction="never"/>
 
-    <item android:id="@+id/action_send"
+    <item
+        android:id="@+id/action_send"
         android:title="@string/load_file"
         app:showAsAction="never"/>
 

@@ -20,7 +20,7 @@ public class TranslationActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.view_translation);
-        TextView translationView = (TextView) findViewById(R.id.word_translation_text);
+        TextView translationView = findViewById(R.id.word_translation_text);
 
         String mainText = getIntent().getStringExtra("translation");
         String textToSelect = getIntent().getStringExtra("word");
@@ -37,7 +37,7 @@ public class TranslationActivity extends AppCompatActivity {
             {
                 WordtoSpan.
                         setSpan(
-                                new BackgroundColorSpan(0xFFFFFF00),
+                                new BackgroundColorSpan(R.color.colorAccent),
                                 selTextIndex,
                                 selTextIndex+textToSelect.length(),
                                 Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
