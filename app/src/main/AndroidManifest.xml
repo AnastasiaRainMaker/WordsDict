@@ -18,6 +18,12 @@
         android:theme="@style/AppTheme"
         tools:replace="android:allowBackup,icon,theme,label,android:roundIcon"
         tools:ignore="GoogleAppIndexingWarning">
+        <activity android:name=".main.views.SplashActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
         <activity
             android:name=".main.views.LearningActivity"
             android:configChanges="orientation|screenSize" />
@@ -25,13 +31,9 @@
         <activity
             android:name=".main.views.MenuActivity"
             android:windowSoftInputMode="adjustNothing">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity android:name=".main.views.AboutActivity" />
+
     </application>
 
 </manifest>

@@ -131,7 +131,7 @@ public class MenuActivity extends AppCompatActivity {
         MenuItem toolbarMenuItem1 = toolbarMenu.findItem(R.id.action_about);
         MenuItem toolbarMenuItem2 = toolbarMenu.findItem(R.id.action_save);
         MenuItem toolbarMenuItem3 = toolbarMenu.findItem(R.id.action_send);
-        
+
 //        Typeface custom_font = Typeface.createFromAsset(getAssets(), "font/custom_font3.ttf");
 //        SpannableStringBuilder title1 = new SpannableStringBuilder(getApplicationContext().getString(R.string.about));
 //        title1.setSpan(custom_font, 0, title1.length(), 0);
