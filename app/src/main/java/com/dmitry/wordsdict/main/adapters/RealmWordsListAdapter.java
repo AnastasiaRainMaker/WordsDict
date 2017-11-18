@@ -15,6 +15,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ActionMenuView;
 import android.widget.TextView;
 
 import com.dmitry.wordsdict.R;
@@ -84,19 +85,17 @@ public class RealmWordsListAdapter extends RealmRecyclerViewAdapter<WordModelRea
                 return false;
             }
             mActionMode = activity.startActionMode(mActionModeCallback);
-            mRealm.executeTransaction(new Realm.Transaction() {
-                @Override
-                public void execute(Realm realm) {
-                    if (obj != null) {
-                        obj.setSelected(true);
-                    }
+            mRealm.executeTransaction(realm -> {
+                if (obj != null) {
+                    obj.setSelected(true);
                 }
             });
             selectedItem = position;
             return true;
         });
+        assert obj != null;
         if (obj.isSelected()){
-            holder.itemView.setBackgroundColor(activity.getResources().getColor(R.color.red));
+            holder.itemView.setBackgroundColor(activity.getResources().getColor(R.color.colorAccent));
         } else
         if (obj.getWordPriority() > 0){
             holder.itemView.setBackgroundColor(activity.getResources().getColor(R.color.word_priority_color));
@@ -119,10 +118,10 @@ public class RealmWordsListAdapter extends RealmRecyclerViewAdapter<WordModelRea
 
         MyViewHolder(View view) {
             super(view);
-            priority = (TextView) view.findViewById(R.id.word_priority);
-            title = (TextView) view.findViewById(R.id.word_title);
-            frequency = (TextView) view.findViewById(R.id.word_frequency);
-            date = (TextView) view.findViewById(R.id.word_date);
+            priority = view.findViewById(R.id.word_priority);
+            title = view.findViewById(R.id.word_title);
+            frequency = view.findViewById(R.id.word_frequency);
+            date = view.findViewById(R.id.word_date);
         }
     }
 
@@ -137,6 +136,7 @@ public class RealmWordsListAdapter extends RealmRecyclerViewAdapter<WordModelRea
 
         @Override
         public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+
             return false;
         }
 
@@ -144,32 +144,21 @@ public class RealmWordsListAdapter extends RealmRecyclerViewAdapter<WordModelRea
         public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.context_delete:
-                    mRealm.executeTransaction(new Realm.Transaction() {
-                        @Override
-                        public void execute(Realm realm) {
-                            getItem(selectedItem).deleteFromRealm();
-                        }
-                    });
+                    mRealm.executeTransaction(realm -> getItem(selectedItem).deleteFromRealm());
                     handleMenuFinish(mode);
                     return true;
                 case R.id.context_word_difficalty_up:
-                    mRealm.executeTransaction(new Realm.Transaction() {
-                        @Override
-                        public void execute(Realm realm) {
-                            getItem(selectedItem).setWordPriority(getItem(selectedItem).getWordPriority() + 1);
-                            getItem(selectedItem).setSelected(false);
-                        }
+                    mRealm.executeTransaction(realm -> {
+                        getItem(selectedItem).setWordPriority(getItem(selectedItem).getWordPriority() + 1);
+                        getItem(selectedItem).setSelected(false);
                     });
                     handleMenuFinish(mode);
                     return true;
                 case R.id.context_word_difficalty_down:
-                    mRealm.executeTransaction(new Realm.Transaction() {
-                        @Override
-                        public void execute(Realm realm) {
-                            if (getItem(selectedItem).getWordPriority() > 0)
-                                getItem(selectedItem).setWordPriority(getItem(selectedItem).getWordPriority() - 1);
-                            getItem(selectedItem).setSelected(false);
-                        }
+                    mRealm.executeTransaction(realm -> {
+                        if (getItem(selectedItem).getWordPriority() > 0)
+                            getItem(selectedItem).setWordPriority(getItem(selectedItem).getWordPriority() - 1);
+                        getItem(selectedItem).setSelected(false);
                     });
                     handleMenuFinish(mode);
                     return true;
@@ -177,6 +166,7 @@ public class RealmWordsListAdapter extends RealmRecyclerViewAdapter<WordModelRea
                     return false;
             }
         }
+
 
         private void handleMenuFinish(ActionMode mode){
             deselectAll();
@@ -189,12 +179,7 @@ public class RealmWordsListAdapter extends RealmRecyclerViewAdapter<WordModelRea
         public void onDestroyActionMode(ActionMode mode) {
             mActionMode = null;
             if (selectedItem != null){
-                mRealm.executeTransaction(new Realm.Transaction() {
-                    @Override
-                    public void execute(Realm realm) {
-                        getItem(selectedItem).setSelected(false);
-                    }
-                });
+                mRealm.executeTransaction(realm -> getItem(selectedItem).setSelected(false));
                 selectedItem = null;
                 notifyDataSetChanged();
             }

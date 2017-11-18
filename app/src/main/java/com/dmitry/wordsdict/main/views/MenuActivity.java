@@ -46,11 +46,10 @@ public class MenuActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
-        invalidateOptionsMenu();
         bottomNavigationView = findViewById(R.id.bottom_navigation);
         applyBottomNavFont();
         mainToolbar = findViewById(R.id.toolbar_main);
-        applyToolbarFont();
+//        applyToolbarFont();
         setSupportActionBar(mainToolbar);
         FragmentMenu fragment = new FragmentMenu();
         getSupportFragmentManager()
@@ -104,27 +103,27 @@ public class MenuActivity extends AppCompatActivity {
             }
         }
     }
-    private void applyToolbarFont() {
-        // The Toolbar widget doesn't provide a native way to set the appearance of
-        // the text views. So we have to hack in to the view hierarchy here.
-        for (int i = 0; i < mainToolbar.getChildCount(); i++) {
-            View child = mainToolbar.getChildAt(i);
-            if (child instanceof ActionMenuView) {
-                ActionMenuView menu = (ActionMenuView) child;
-                for (int j = 0; j < menu.getChildCount(); j++) {
-                    View item = menu.getChildAt(j);
-                    View smallItemText = item.findViewById(android.support.design.R.id.smallLabel);
-                    if (smallItemText instanceof TextView) {
-                        ((TextView) smallItemText).setTextAppearance(getApplicationContext(), R.style.MenuTextAppearance);
-                    }
-                    View largeItemText = item.findViewById(android.support.design.R.id.largeLabel);
-                    if (largeItemText instanceof TextView) {
-                        ((TextView) largeItemText).setTextAppearance(getApplicationContext(), R.style.MenuTextAppearance);
-                    }
-                }
-            }
-        }
-    }
+//    private void applyToolbarFont() {
+//        // The Toolbar widget doesn't provide a native way to set the appearance of
+//        // the text views. So we have to hack in to the view hierarchy here.
+//        for (int i = 0; i < mainToolbar.getChildCount(); i++) {
+//            View child = mainToolbar.getChildAt(i);
+//            if (child instanceof ActionMenuView) {
+//                ActionMenuView menu = (ActionMenuView) child;
+//                for (int j = 0; j < menu.getChildCount(); j++) {
+//                    View item = menu.getChildAt(j);
+//                    View smallItemText = item.findViewById(android.support.design.R.id.smallLabel);
+//                    if (smallItemText instanceof TextView) {
+//                        ((TextView) smallItemText).setTextAppearance(getApplicationContext(), R.style.MenuTextAppearance);
+//                    }
+//                    View largeItemText = item.findViewById(android.support.design.R.id.largeLabel);
+//                    if (largeItemText instanceof TextView) {
+//                        ((TextView) largeItemText).setTextAppearance(getApplicationContext(), R.style.MenuTextAppearance);
+//                    }
+//                }
+//            }
+//        }
+//    }
 //
 //    private void showHello(Button view) {
 //        Display display = getWindowManager().getDefaultDisplay();
@@ -151,16 +150,6 @@ public class MenuActivity extends AppCompatActivity {
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-
-        Menu toolbarMenu = mainToolbar.getMenu();
-        MenuItem toolbarMenuItem1 = toolbarMenu.findItem(R.id.action_about);
-        MenuItem toolbarMenuItem2 = toolbarMenu.findItem(R.id.action_save);
-        MenuItem toolbarMenuItem3 = toolbarMenu.findItem(R.id.action_send);
-
-//        Typeface custom_font = Typeface.createFromAsset(getAssets(), "font/custom_font3.ttf");
-//        SpannableStringBuilder title1 = new SpannableStringBuilder(getApplicationContext().getString(R.string.about));
-//        title1.setSpan(custom_font, 0, title1.length(), 0);
-//        toolbarMenuItem1.setTitle(title1);
         return true;
     }
 

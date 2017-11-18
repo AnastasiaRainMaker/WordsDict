@@ -5,7 +5,7 @@
         <!-- Customize your theme here. -->
         <item name="colorPrimary">#5C6BC0</item>
         <item name="colorPrimaryDark">#283593</item>
-        <item name="colorAccent">#9C27B0</item>
+        <item name="colorAccent">@color/colorAccent</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <!--<item name="android:actionMenuTextAppearance">@style/ItemMenuTextAppearance</item>-->

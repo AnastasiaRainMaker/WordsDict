@@ -15,7 +15,7 @@
     <color name="darkorange" type="color">#FFFF8800</color>
     <color name="darkred" type="color">#FFCC0000</color>
     <color name="word_row_color" type="color">#E8EAF6</color>
-    <color name="word_priority_color" type="color">#5C6BC0</color>
+    <color name="word_priority_color" type="color">#9FA8DA</color>
     <color name="white" type="color">#ffffff</color>
     <color name="tint_transparent">#99FFFFFF</color>
     <color name="tint_transparent50">#40FFFFFF</color>
