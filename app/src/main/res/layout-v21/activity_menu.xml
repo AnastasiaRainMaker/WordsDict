@@ -19,7 +19,6 @@
     android:background="?attr/colorPrimaryDark"
     android:minHeight="?attr/actionBarSize"
     android:textColor="@color/white"
-    android:theme="@style/ToolbarTheme"
     app:titleTextAppearance="@style/MenuTextAppearance"
     android:theme="@style/ToolbarTheme"
     app:layout_constraintEnd_toEndOf="parent"
