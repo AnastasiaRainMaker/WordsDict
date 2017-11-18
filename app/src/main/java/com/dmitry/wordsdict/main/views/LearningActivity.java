@@ -50,14 +50,14 @@ public class LearningActivity extends AppCompatActivity implements LearningView 
         taskType = getIntent().getIntExtra("type", 0);
         learningPresenter = new LearningPresenterImpl(this,
                 new LearningInteractorImpl());
-        checkButton = (Button) findViewById(R.id.learning_check_button);
-        skipButton = (Button) findViewById(R.id.learning_skip_button);
-        hintButton = (Button) findViewById(R.id.learning_show_translation_button);
-        upWordButton = (Button) findViewById(R.id.learning_up_word_button);
-        wordTextView = (TextView) findViewById(R.id.learning_word_textview);
-        translationEditText = (EditText) findViewById(R.id.learning_translationedittext);
-        doneXfromYTextView = (TextView) findViewById(R.id.learning_donexfromy_textview);
-        TextViewHint = (TextView) findViewById(R.id.learning_textView_hint);
+        checkButton = findViewById(R.id.learning_check_button);
+        skipButton = findViewById(R.id.learning_skip_button);
+        hintButton = findViewById(R.id.learning_show_translation_button);
+        upWordButton = findViewById(R.id.learning_up_word_button);
+        wordTextView = findViewById(R.id.learning_word_textview);
+        translationEditText = findViewById(R.id.learning_translationedittext);
+        doneXfromYTextView = findViewById(R.id.learning_donexfromy_textview);
+        TextViewHint = findViewById(R.id.learning_textView_hint);
         if (taskType == 1){
             doneXfromYTextView.setVisibility(View.GONE);
             upWordButton.setText("Добавить в мой словарь");
@@ -66,21 +66,19 @@ public class LearningActivity extends AppCompatActivity implements LearningView 
         } else {
             upWordButton.setOnClickListener(v -> setUpUpWordButton());
         }
-
         checkButton.setOnClickListener(v -> setUpCheckButton());
         hintButton.setOnClickListener(v -> setUpHintButton());
         skipButton.setOnClickListener(v -> setUpSkipButton());
         prepareView();
     }
-
     private void setUpAddToDictButton() {
         String word = wordTextView.getText() != null ? wordTextView.getText().toString() : "";
         final Dialog dialog = new Dialog(LearningActivity.this);
         dialog.setContentView(R.layout.add_word_dialog);
         ((TextView) dialog.findViewById(R.id.dialog_info)).setText(String.format("Введите перевод для %s", word));
-        Button okButton = (Button) dialog.findViewById(R.id.dialog_add_word_ok);
+        Button okButton = dialog.findViewById(R.id.dialog_add_word_ok);
         okButton.setOnClickListener(v->{
-            EditText et = (EditText) dialog.findViewById(R.id.dialog_add_word_edittext);
+            EditText et = dialog.findViewById(R.id.dialog_add_word_edittext);
             if (et.getText() != null && et.getText().toString().length() > 0){
                 saveWordInteractor.saveWordToDB(et.getText().toString(), word);
                 showError(String.format("Слово '%s' добавлено в словарь", word));

@@ -3,51 +3,33 @@ package com.dmitry.wordsdict.main.views;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
-import android.graphics.Color;
-import android.graphics.Point;
-import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
-import android.os.Handler;
 import android.support.annotation.RequiresApi;
+import android.support.design.internal.BottomNavigationMenuView;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.text.SpannableString;
-import android.text.SpannableStringBuilder;
-import android.text.style.ForegroundColorSpan;
-import android.text.style.TextAppearanceSpan;
-import android.util.AttributeSet;
 import android.util.Log;
-import android.view.Display;
-import android.view.InflateException;
-import android.view.LayoutInflater;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.animation.TranslateAnimation;
-import android.widget.Button;
+import android.widget.ActionMenuView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.dmitry.wordsdict.Constants;
 import com.dmitry.wordsdict.R;
 import com.dmitry.wordsdict.model.WordModelRealm;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.Writer;
-import java.util.Random;
-
 import io.realm.Realm;
 import io.realm.RealmObject;
 import io.realm.RealmResults;
@@ -55,6 +37,7 @@ import io.realm.RealmResults;
 public class MenuActivity extends AppCompatActivity {
 
     Toolbar mainToolbar;
+    BottomNavigationView bottomNavigationView;
 
     private final int FILE_SELECT_CODE = 0;
 
@@ -64,8 +47,10 @@ public class MenuActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
         invalidateOptionsMenu();
-        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
+        bottomNavigationView = findViewById(R.id.bottom_navigation);
+        applyBottomNavFont();
         mainToolbar = findViewById(R.id.toolbar_main);
+        applyToolbarFont();
         setSupportActionBar(mainToolbar);
         FragmentMenu fragment = new FragmentMenu();
         getSupportFragmentManager()
@@ -96,9 +81,49 @@ public class MenuActivity extends AppCompatActivity {
                     }
                     return true;
                 });
+    }
 
-
-
+    private void applyBottomNavFont() {
+        // The BottomNavigationView widget doesn't provide a native way to set the appearance of
+        // the text views. So we have to hack in to the view hierarchy here.
+        for (int i = 0; i < bottomNavigationView.getChildCount(); i++) {
+            View child = bottomNavigationView.getChildAt(i);
+            if (child instanceof BottomNavigationMenuView) {
+                BottomNavigationMenuView menu = (BottomNavigationMenuView) child;
+                for (int j = 0; j < menu.getChildCount(); j++) {
+                    View item = menu.getChildAt(j);
+                    View smallItemText = item.findViewById(android.support.design.R.id.smallLabel);
+                    if (smallItemText instanceof TextView) {
+                       ((TextView) smallItemText).setTextAppearance(getApplicationContext(), R.style.BottomNavTextAppearance);
+                    }
+                    View largeItemText = item.findViewById(android.support.design.R.id.largeLabel);
+                    if (largeItemText instanceof TextView) {
+                        ((TextView) largeItemText).setTextAppearance(getApplicationContext(), R.style.BottomNavTextAppearance);
+                    }
+                }
+            }
+        }
+    }
+    private void applyToolbarFont() {
+        // The Toolbar widget doesn't provide a native way to set the appearance of
+        // the text views. So we have to hack in to the view hierarchy here.
+        for (int i = 0; i < mainToolbar.getChildCount(); i++) {
+            View child = mainToolbar.getChildAt(i);
+            if (child instanceof ActionMenuView) {
+                ActionMenuView menu = (ActionMenuView) child;
+                for (int j = 0; j < menu.getChildCount(); j++) {
+                    View item = menu.getChildAt(j);
+                    View smallItemText = item.findViewById(android.support.design.R.id.smallLabel);
+                    if (smallItemText instanceof TextView) {
+                        ((TextView) smallItemText).setTextAppearance(getApplicationContext(), R.style.MenuTextAppearance);
+                    }
+                    View largeItemText = item.findViewById(android.support.design.R.id.largeLabel);
+                    if (largeItemText instanceof TextView) {
+                        ((TextView) largeItemText).setTextAppearance(getApplicationContext(), R.style.MenuTextAppearance);
+                    }
+                }
+            }
+        }
     }
 //
 //    private void showHello(Button view) {
@@ -350,17 +375,5 @@ public class MenuActivity extends AppCompatActivity {
         }
         return jArray;
     }
-
-//    private void setUpTranslateButton() {
-//        startActivity(
-//                new Intent( this, FragmentMenu.class)
-//        );
-//    }
-//
-//    private void setUpDictButton() {
-//        startActivity(
-//                new Intent( this, FragmentListWords.class)
-//        );
-//    }
 
 }

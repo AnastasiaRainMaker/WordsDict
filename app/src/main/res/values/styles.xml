@@ -19,8 +19,16 @@
         <item name="android:textSize">20sp</item>
         <item name="android:textColor">@color/white</item>
     </style>
-    <style name="ItemMenuTextAppearance" parent="TextAppearance.AppCompat.Menu">
+    <style name="BottomNavTextAppearance" >
         <item name="android:fontFamily">@font/custom_font3</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="ToolbarTheme" parent="@style/ThemeOverlay.AppCompat.ActionBar">
+        <item name="android:fontFamily">@font/custom_font3</item>
+        <item name="android:textSize">14sp</item>
+        <item name="colorControlNormal">@color/white</item>
     </style>
 
 

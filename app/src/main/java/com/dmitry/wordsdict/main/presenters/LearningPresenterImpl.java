@@ -123,9 +123,8 @@ public class LearningPresenterImpl implements LearningPresenter {
                 .equalTo(Constants.REALM_WORD_NAME_KEY, word)
                 .findFirst()
                 .getWordTranslation();
-        if (truncateTranslation(correctTranslation).contains(userValue))
-            return true;
-        return false;
+
+        return truncateTranslation(correctTranslation).contains(userValue);
     }
 
     @Override

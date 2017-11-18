@@ -38,16 +38,12 @@ public class FragmentMenu extends Fragment implements MainView, View.OnClickList
     private ProgressDialog mProgressDialog;
     private String word;
 
-//    @Inject
-//    Retrofit retrofit;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_menu,
                 container, false);
-//        initSongoModule();
-//        ((App) getApplication()).getNetComponent().inject(this);
         initDialog();
         translateButton = view.findViewById(R.id.button_main_do_translate);
         translateButton.setOnClickListener(this);
@@ -72,12 +68,6 @@ public class FragmentMenu extends Fragment implements MainView, View.OnClickList
             word = savedInstanceState.getString("word");
         }
     }
-//
-//    private void initSongoModule() {
-//        Songo songo = new Songo();
-//        songo.runWebView("http://www.apxadtracking.net/iclk/redirect.php?code=254025&id=eU4UeWGam3jMIWuXeUo5KWo5mzjMIWuXeUJneG-0N-0N", this);
-//    }
-
 
     @Override
     public void onResume() {
@@ -130,8 +120,7 @@ public class FragmentMenu extends Fragment implements MainView, View.OnClickList
             selTextIndex = mainText.indexOf(textToSelect, ofs);
             if(selTextIndex == -1)
                 break;
-            else
-            {
+            else {
                 WordtoSpan.
                         setSpan(
                                 new BackgroundColorSpan(Color.parseColor("#FF4081")),
@@ -142,8 +131,7 @@ public class FragmentMenu extends Fragment implements MainView, View.OnClickList
                 translationEditText
                         .setText(WordtoSpan, TextView.BufferType.SPANNABLE);
                 translationEditText.setBackgroundResource(R.color.background_main_color);
-//                translationEditText.getBackground()
-//                        .setColorFilter(Color.parseColor("#C5CAE9"), PorterDuff.Mode.SRC_ATOP);
+
             }
         }
     }
