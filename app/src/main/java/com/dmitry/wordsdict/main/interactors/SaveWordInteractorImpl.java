@@ -37,23 +37,15 @@ public class SaveWordInteractorImpl implements SaveWordInteractor{
             rWord.setCreationDate(new Date());
             rWord.setWordTranslation(translation);
             rWord.setWordFrequency(1);
-            mRealm.executeTransaction(new Realm.Transaction() {
-                @Override
-                public void execute(Realm realm) {
-                    realm.insert(rWord);
-                }
-            });
+            mRealm.executeTransaction(realm -> realm.insert(rWord));
         } else {
-            mRealm.executeTransaction(new Realm.Transaction() {
-                @Override
-                public void execute(Realm realm) {
-                    WordModelRealm riWord = realm.where(WordModelRealm.class).equalTo(Constants.REALM_WORD_NAME_KEY, word).findFirst();
-                    riWord.setWordFrequency(riWord.getWordFrequency() + 1);
-                    riWord.setCreationDate(new Date());
-                    String oldTranslation = riWord.getWordTranslation();
-                    if (oldTranslation != null  && oldTranslation.length() < translation.length())
-                        riWord.setWordTranslation(translation); // update translation if needs
-                }
+            mRealm.executeTransaction(realm -> {
+                WordModelRealm riWord = realm.where(WordModelRealm.class).equalTo(Constants.REALM_WORD_NAME_KEY, word).findFirst();
+                riWord.setWordFrequency(riWord.getWordFrequency() + 1);
+                riWord.setCreationDate(new Date());
+                String oldTranslation = riWord.getWordTranslation();
+                if (oldTranslation != null  && oldTranslation.length() < translation.length())
+                    riWord.setWordTranslation(translation); // update translation if needed
             });
         }
     }

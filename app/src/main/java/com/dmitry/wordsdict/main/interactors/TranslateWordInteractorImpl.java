@@ -1,42 +1,20 @@
 package com.dmitry.wordsdict.main.interactors;
 
-import android.app.Application;
 import android.content.Context;
-import android.os.Environment;
 import android.util.Log;
-
-import com.dmitry.wordsdict.App;
 import com.dmitry.wordsdict.Constants;
-
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
-
-import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
-import java.nio.charset.StandardCharsets;
-import java.util.regex.Pattern;
-
-
 import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
-
 import static com.dmitry.wordsdict.Constants.MULTITRAN_CSS_SELECTOR;
-import static com.dmitry.wordsdict.Constants.MULTITRAN_URL;
 import static com.dmitry.wordsdict.Constants.MULTITRAN_URL_RUS;
 import static com.dmitry.wordsdict.Constants.TAG;
-
-/**
- * Created by dmitry on 5/28/17.
- */
 
 public class TranslateWordInteractorImpl implements TranslateWordInteractor {
 

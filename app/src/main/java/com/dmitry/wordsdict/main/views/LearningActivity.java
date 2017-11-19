@@ -24,10 +24,6 @@ import com.dmitry.wordsdict.main.presenters.LearningPresenterImpl;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Created by dmitry on 6/11/17.
- */
-
 public class LearningActivity extends AppCompatActivity implements LearningView {
 
     private LearningPresenter learningPresenter;
@@ -104,6 +100,7 @@ public class LearningActivity extends AppCompatActivity implements LearningView 
         if (word.length() > 0) {
             showError(String.format("Приоритет слова '%s' поднят", word));
         }
+        learningPresenter.upWord(word);
     }
 
     private void setUpHintButton() {
@@ -234,7 +231,7 @@ public class LearningActivity extends AppCompatActivity implements LearningView 
         final Dialog dialog = new Dialog(LearningActivity.this);
         dialog.setContentView(R.layout.error_dialog);
         ((TextView) dialog.findViewById(R.id.dialog_info)).setText(text);
-        Button okButton = (Button) dialog.findViewById(R.id.dialog_cancel);
+        Button okButton = dialog.findViewById(R.id.dialog_cancel);
         okButton.setOnClickListener(v->dialog.dismiss());
         dialog.show();
     }
