@@ -1,12 +1,17 @@
 package com.dmitry.wordsdict.main.views;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.internal.BottomNavigationItemView;
+import android.support.design.internal.BottomNavigationMenuView;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Gravity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -14,31 +19,26 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.dmitry.wordsdict.R;
 import com.dmitry.wordsdict.main.interactors.LearningInteractorImpl;
 import com.dmitry.wordsdict.main.interactors.SaveWordInteractorImpl;
 import com.dmitry.wordsdict.main.presenters.LearningPresenter;
 import com.dmitry.wordsdict.main.presenters.LearningPresenterImpl;
-
-import java.util.HashMap;
-import java.util.Map;
+import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 
 public class LearningActivity extends AppCompatActivity implements LearningView {
 
     private LearningPresenter learningPresenter;
-    private Button checkButton;
-    private Button hintButton;
-    private Button upWordButton;
     private TextView wordTextView;
     private TextView doneXfromYTextView;
     private TextView TextViewHint;
-    private Button skipButton;
     private EditText translationEditText;
     private int taskType;
     private SaveWordInteractorImpl saveWordInteractor;
     private String translation;
+    BottomNavigationViewEx bottomNavigationView;
 
+    @SuppressLint("RestrictedApi")
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,26 +46,78 @@ public class LearningActivity extends AppCompatActivity implements LearningView 
         taskType = getIntent().getIntExtra("type", 0);
         learningPresenter = new LearningPresenterImpl(this,
                 new LearningInteractorImpl());
-        checkButton = findViewById(R.id.learning_check_button);
-        skipButton = findViewById(R.id.learning_skip_button);
-        hintButton = findViewById(R.id.learning_show_translation_button);
-        upWordButton = findViewById(R.id.learning_up_word_button);
+        bottomNavigationView = findViewById(R.id.bottom_navigation_learning);
+        BottomNavigationMenuView menuView = (BottomNavigationMenuView) bottomNavigationView.getChildAt(0);
+        for (int i = 0; i < menuView.getChildCount(); i++) {
+            BottomNavigationItemView itemView = (BottomNavigationItemView) menuView.getChildAt(i);
+            itemView.setChecked(false);
+            bottomNavigationView.enableAnimation(false);
+            bottomNavigationView.enableShiftingMode(false);
+            bottomNavigationView.enableItemShiftingMode(false);
+        }
+        applyBottomNavFont();
         wordTextView = findViewById(R.id.learning_word_textview);
         translationEditText = findViewById(R.id.learning_translationedittext);
         doneXfromYTextView = findViewById(R.id.learning_donexfromy_textview);
         TextViewHint = findViewById(R.id.learning_textView_hint);
         if (taskType == 1){
             doneXfromYTextView.setVisibility(View.GONE);
-            upWordButton.setText("Добавить в мой словарь");
-            upWordButton.setOnClickListener(v -> setUpAddToDictButton());
-            saveWordInteractor = new SaveWordInteractorImpl();
+            Menu menu = bottomNavigationView.getMenu();
+            MenuItem upWordItem = menu.findItem(R.id.learning_up_word_item);
+            upWordItem.setTitle("Добавить в мой словарь");
+            upWordItem.setOnMenuItemClickListener(item -> {
+                setUpAddToDictButton();
+                saveWordInteractor = new SaveWordInteractorImpl();
+                return true;
+            });
+
         } else {
-            upWordButton.setOnClickListener(v -> setUpUpWordButton());
+            Menu menu = bottomNavigationView.getMenu();
+            MenuItem upWordItem = menu.findItem(R.id.learning_up_word_item);
+            upWordItem.setOnMenuItemClickListener(item -> {
+                setUpUpWordButton();
+                return true;
+            });
         }
-        checkButton.setOnClickListener(v -> setUpCheckButton());
-        hintButton.setOnClickListener(v -> setUpHintButton());
-        skipButton.setOnClickListener(v -> setUpSkipButton());
+
+        bottomNavigationView.setOnNavigationItemSelectedListener(
+                item -> {
+                    if (item.getItemId() == R.id.learning_show_translation_item) {
+                        setUpHintButton();
+                    } else if (item.getItemId() == R.id.learning_skip_item){
+                        setUpSkipButton();
+                    }  else if (item.getItemId() == R.id.learning_check_item) {
+                        setUpCheckButton();
+                    } else {
+                        setUpUpWordButton();
+                    }
+                    return true;
+                });
+
+
         prepareView();
+    }
+
+    private void applyBottomNavFont() {
+        // The BottomNavigationView widget doesn't provide a native way to set the appearance of
+        // the text views. So we have to hack in to the view hierarchy here.
+        for (int i = 0; i < bottomNavigationView.getChildCount(); i++) {
+            View child = bottomNavigationView.getChildAt(i);
+            if (child instanceof BottomNavigationMenuView) {
+                BottomNavigationMenuView menu = (BottomNavigationMenuView) child;
+                for (int j = 0; j < menu.getChildCount(); j++) {
+                    View item = menu.getChildAt(j);
+                    View smallItemText = item.findViewById(android.support.design.R.id.smallLabel);
+                    if (smallItemText instanceof TextView) {
+                        ((TextView) smallItemText).setTextAppearance(getApplicationContext(), R.style.BottomNavTextAppearance);
+                    }
+                    View largeItemText = item.findViewById(android.support.design.R.id.largeLabel);
+                    if (largeItemText instanceof TextView) {
+                        ((TextView) largeItemText).setTextAppearance(getApplicationContext(), R.style.BottomNavTextAppearance);
+                    }
+                }
+            }
+        }
     }
     private void setUpAddToDictButton() {
         String word = wordTextView.getText() != null ? wordTextView.getText().toString() : "";
@@ -158,13 +210,9 @@ public class LearningActivity extends AppCompatActivity implements LearningView 
     }
 
     private void disableView() {
-        checkButton.setVisibility(View.GONE);
-        hintButton.setVisibility(View.GONE);
-        upWordButton.setVisibility(View.GONE);
         translationEditText.setVisibility(View.GONE);
         doneXfromYTextView.setVisibility(View.GONE);
         TextViewHint.setVisibility(View.GONE);
-        skipButton.setVisibility(View.GONE);
     }
 
     @Override

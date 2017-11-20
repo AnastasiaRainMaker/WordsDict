@@ -34,21 +34,12 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-//    compile(name:'songolib1', ext:'aar')
-
-//    compile 'com.sibedge.aarlib:my2:1.0@aar'
-
-//    compile 'com.sibedge.aarlib:aarlib7:1.3@aar'
-//
+    compile 'com.github.ittianyu:BottomNavigationViewEx:1.2.4'
     compile 'com.sibedge.songolib:songolib-release:1.2@aar'
-
-//    compile 'com.sibedge.aarlib:mylib:1.0@aar'
     compile 'com.android.support:appcompat-v7:26.1.0'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile 'com.squareup.retrofit2:retrofit:2.2.0'
     compile 'com.squareup.retrofit2:converter-gson:2.2.0'
-//    compile 'com.google.dagger:dagger:2.10'
-//    apt 'com.google.dagger:dagger-compiler:2.10'
     testCompile 'junit:junit:4.12'
     compile 'io.realm:android-adapters:2.0.0'
     testCompile 'org.mockito:mockito-core:2.8.9'
