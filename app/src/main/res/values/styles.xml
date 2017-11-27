@@ -8,8 +8,7 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
-        <!--<item name="android:actionMenuTextAppearance">@style/ItemMenuTextAppearance</item>-->
-    </style>
+     </style>
     <style name="InputHint" parent="TextAppearance.Design.Hint">
         <item name="android:textSize">14sp</item>
         <item name="android:textColor">@color/colorAccent</item>
@@ -32,19 +31,5 @@
     </style>
 
 
-    <!--menu font-->
-    <!--<item name="android:actionMenuTextAppearance">@style/MyActionBar.MenuTextStyle</item>-->
-
-    <!--<style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">-->
-
-        <!--<item name="android:itemBackground">@color/skyBlue</item>-->
-        <!--<item name="android:textStyle">bold</item>-->
-        <!--<item name="android:actionMenuTextAppearance">@style/MyActionBar.MenuTextStyle</item>-->
-    <!--</style>-->
-
-    <!--<style name="MyActionBar.MenuTextStyle" parent="Theme.AppCompat">-->
-        <!--<item name="actionMenuTextColor">@color/white</item>-->
-        <!--<item name="android:actionMenuTextColor">@color/white</item>-->
-    <!--</style>-->
 
 </resources>

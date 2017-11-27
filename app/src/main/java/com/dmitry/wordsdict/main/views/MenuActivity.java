@@ -1,8 +1,11 @@
 package com.dmitry.wordsdict.main.views;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -10,13 +13,15 @@ import android.os.Environment;
 import android.support.annotation.RequiresApi;
 import android.support.design.internal.BottomNavigationMenuView;
 import android.support.design.widget.BottomNavigationView;
+import android.support.v4.app.ActivityCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.view.ContextThemeWrapper;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ActionMenuView;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.dmitry.wordsdict.Constants;
@@ -25,14 +30,19 @@ import com.dmitry.wordsdict.model.WordModelRealm;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileReader;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.io.Writer;
 import io.realm.Realm;
 import io.realm.RealmObject;
 import io.realm.RealmResults;
+
+import static com.dmitry.wordsdict.Constants.REQ_CODE;
 
 public class MenuActivity extends AppCompatActivity {
 
@@ -49,7 +59,6 @@ public class MenuActivity extends AppCompatActivity {
         bottomNavigationView = findViewById(R.id.bottom_navigation);
         applyBottomNavFont();
         mainToolbar = findViewById(R.id.toolbar_main);
-//        applyToolbarFont();
         setSupportActionBar(mainToolbar);
         FragmentMenu fragment = new FragmentMenu();
         getSupportFragmentManager()
@@ -103,44 +112,6 @@ public class MenuActivity extends AppCompatActivity {
             }
         }
     }
-//    private void applyToolbarFont() {
-//        // The Toolbar widget doesn't provide a native way to set the appearance of
-//        // the text views. So we have to hack in to the view hierarchy here.
-//        for (int i = 0; i < mainToolbar.getChildCount(); i++) {
-//            View child = mainToolbar.getChildAt(i);
-//            if (child instanceof ActionMenuView) {
-//                ActionMenuView menu = (ActionMenuView) child;
-//                for (int j = 0; j < menu.getChildCount(); j++) {
-//                    View item = menu.getChildAt(j);
-//                    View smallItemText = item.findViewById(android.support.design.R.id.smallLabel);
-//                    if (smallItemText instanceof TextView) {
-//                        ((TextView) smallItemText).setTextAppearance(getApplicationContext(), R.style.MenuTextAppearance);
-//                    }
-//                    View largeItemText = item.findViewById(android.support.design.R.id.largeLabel);
-//                    if (largeItemText instanceof TextView) {
-//                        ((TextView) largeItemText).setTextAppearance(getApplicationContext(), R.style.MenuTextAppearance);
-//                    }
-//                }
-//            }
-//        }
-//    }
-//
-//    private void showHello(Button view) {
-//        Display display = getWindowManager().getDefaultDisplay();
-//        Point size = new Point();
-//        display.getSize(size);
-//        int width = size.x;
-//        Random rand = new Random();
-//        rand.nextBoolean();
-//        TranslateAnimation animation = new TranslateAnimation(rand.nextBoolean() ? -width : width, 0, 0, 0);
-//        animation.setDuration(1000);
-//        view.startAnimation(animation);
-//    }
-
-//    private void setUpLearningButton() {
-//        startActivity(new Intent(MenuActivity.this, FragmentLearningChoice.class));
-//    }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -157,7 +128,8 @@ public class MenuActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_save:
-                setUpExportButton();
+                //setUpExportButton();
+                getUserPermission();
                 return true;
 
             case R.id.action_send:
@@ -218,6 +190,29 @@ public class MenuActivity extends AppCompatActivity {
                 break;
         }
         super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
+    public void onBackPressed() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Вы уверены, что хотите выйти?")
+                .setCancelable(false)
+                .setPositiveButton("Да", (dialog, id) -> {
+                    if(android.os.Build.VERSION.SDK_INT >= 21){
+                        android.os.Process.killProcess(android.os.Process.myPid());
+                        finishAndRemoveTask();
+                    } else {
+                        android.os.Process.killProcess(android.os.Process.myPid());
+                        finish();
+                    }
+                })
+                .setNegativeButton("Нет", (dialog, id) -> dialog.cancel());
+        AlertDialog alert = builder.create();
+        alert.show();
+//        TextView textView = alert.getWindow().findViewById(android.R.id.message);
+//        Typeface face=Typeface.createFromAsset(FontHelper.getFont(Fonts.MULI_BOLD));
+//        textView.setTypeface(face);
+
     }
 
     private void loadFromFile(String path) {
@@ -291,25 +286,55 @@ public class MenuActivity extends AppCompatActivity {
         return null;
     }
 
+    private void getUserPermission(){
+
+        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE}, REQ_CODE);
+    }
+
     private void setUpExportButton() {
-        File outputDir;
+        String outputDir;
+        File file;
         if (Environment.MEDIA_MOUNTED.equals(
                 Environment.getExternalStorageState())) {
-            outputDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
+            outputDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath();
+            file = new File(outputDir + Constants.EXPORT_FILE_NAME);
         } else {
-            outputDir = Environment.getDataDirectory();
+            outputDir = Environment.getDataDirectory().toString();
+            file = new File(outputDir + Constants.EXPORT_FILE_NAME);
         }
         if (outputDir != null) {
             try {
-                String strOutput = getExportJson();
+                String strOutput = getExportJson().toString();
                 if (strOutput != null) {
-                    File file = new File(outputDir, Constants.EXPORT_FILE_NAME);
-                    Writer output = new BufferedWriter(new FileWriter(file));
-                    output.write(getExportJson());
-                    output.close();
-                    Toast.makeText(getApplicationContext(), String.format("Saved at %s", file.getAbsoluteFile()), Toast.LENGTH_LONG).show();
+                   if(!file.exists()) {
+                       Writer output = new BufferedWriter(new FileWriter(file));
+                       output.write(strOutput);
+                       output.close();
+                       Toast.makeText(getApplicationContext(), "Файл wordsDictExport.json сохранен в папке Download", Toast.LENGTH_LONG).show();
+                   } else {
+                       StringBuilder text = new StringBuilder();
+                       try {
+                           BufferedReader br = new BufferedReader(new FileReader(file));
+                           String line;
+                           while ((line = br.readLine()) != null) {
+                               text.append(line);
+                               text.append('\n');
+                           }
+                           br.close() ;
+                       } catch (IOException e) {
+                           e.printStackTrace();
+                       }
+                       String newStrOutput = getExportJson().toString();
+                       String newMergedOutput = text + newStrOutput;
+                       String dedupedOutput = deDup(newMergedOutput);
+
+                       Writer output = new BufferedWriter(new FileWriter(file));
+                       output.write(dedupedOutput);
+                       output.close();
+                       Toast.makeText(getApplicationContext(), "Файл wordsDictExport.json сохранен в папке Download", Toast.LENGTH_LONG).show();
+                   }
                 } else {
-                    Toast.makeText(getApplicationContext(), "No data to save", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Невозможно записать файл из пустого словаря", Toast.LENGTH_LONG).show();
                 }
             } catch (Exception e) {
                 Toast.makeText(this,
@@ -322,14 +347,36 @@ public class MenuActivity extends AppCompatActivity {
                     Toast.LENGTH_SHORT).show();
         }
     }
+    public String deDup(String s) {
+        return s.replaceAll("(\\b\\w+\\b)-(?=.*\\b\\1\\b)", "");
+    }
 
-    private String getExportJson() {
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case REQ_CODE: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                setUpExportButton();
+
+                } else {
+                    Toast.makeText(this,
+                            this.getResources().getString(R.string.error_can_not_write_file),
+                            Toast.LENGTH_SHORT).show();
+                }
+            }
+        }
+    }
+
+    private JSONArray getExportJson() {
         Realm mRealm = Realm.getDefaultInstance();
         RealmResults<WordModelRealm> words = mRealm.where(WordModelRealm.class)
                 .notEqualTo(Constants.REALM_WORD_NAME_KEY, "")
                 .findAll();
         if (words.size() > 0){
-            return toJson(words).toString();
+            return toJson(words);
         }
         return null;
     }

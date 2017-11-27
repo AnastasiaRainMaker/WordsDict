@@ -3,33 +3,28 @@ package com.dmitry.wordsdict.main.views;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-
 import com.dmitry.wordsdict.R;
 
 
-public class SplashActivity extends Activity implements Runnable
-{
+public class SplashActivity extends Activity implements Runnable {
 
     Thread mThread;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.splash);
-
         mThread = new Thread(this);
 
         mThread.start();
     }
 
     @Override
-    public void run()
-    {
+    public void run(){
         try
         {
-            Thread.sleep(1000);
+            Thread.sleep(2000);
         }
         catch (Exception e)
         {
@@ -42,5 +37,4 @@ public class SplashActivity extends Activity implements Runnable
             finish();
         }
     }
-
 }

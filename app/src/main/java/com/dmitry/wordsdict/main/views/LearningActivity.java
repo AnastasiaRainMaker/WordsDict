@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.internal.BottomNavigationItemView;
 import android.support.design.internal.BottomNavigationMenuView;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Gravity;
 import android.view.Menu;
@@ -64,7 +65,8 @@ public class LearningActivity extends AppCompatActivity implements LearningView 
             doneXfromYTextView.setVisibility(View.GONE);
             Menu menu = bottomNavigationView.getMenu();
             MenuItem upWordItem = menu.findItem(R.id.learning_up_word_item);
-            upWordItem.setTitle("Добавить в мой словарь");
+            upWordItem.setTitle("Добавить");
+            upWordItem.setIcon(ContextCompat.getDrawable(this,R.drawable.ic_plus));
             upWordItem.setOnMenuItemClickListener(item -> {
                 setUpAddToDictButton();
                 saveWordInteractor = new SaveWordInteractorImpl();
