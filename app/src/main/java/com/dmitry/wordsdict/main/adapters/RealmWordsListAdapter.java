@@ -1,8 +1,5 @@
 package com.dmitry.wordsdict.main.adapters;
 
-/**
- * Created by dmitry on 6/3/17.
- */
 
 import android.annotation.SuppressLint;
 import android.app.Activity;

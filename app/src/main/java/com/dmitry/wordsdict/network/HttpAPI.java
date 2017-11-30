@@ -15,11 +15,6 @@ import retrofit2.http.Query;
 public interface HttpAPI {
     String BASE_URL = "";
 
-//    @GET("c/M.exe")
-//    Call<List<Post>> getMultitranTranslation(
-//            @Query("s") String word
-//    );
-
     @GET("c/M.exe")
     @Headers({ "Content-Type: application/json;charset=UTF-8"})
     Call<ResponseBody> getMultitranTranslation(

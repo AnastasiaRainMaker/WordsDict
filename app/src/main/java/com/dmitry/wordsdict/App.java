@@ -4,51 +4,53 @@ import android.app.Application;
 import android.os.SystemClock;
 import android.util.Log;
 
+import com.dmitry.wordsdict.model.TranslationModelRealm;
+import com.dmitry.wordsdict.model.WordModelRealm;
 import com.dmitry.wordsdict.rxbus.Events;
 import com.dmitry.wordsdict.rxbus.RxEventBus;
-//import com.sibedge.aarlib.ExampleLibrary;
-
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
+import io.realm.annotations.RealmModule;
 
-/**
- * Created by dmitry on 6/1/17.
- */
+
 public class App extends Application {
 
-//    private NetComponent mNetComponent;
     private RxEventBus bus;
-
-//    public void initExampleLibrary() {
-//        ExampleLibrary instance = new ExampleLibrary
-//                .addSomeTitle("title")
-//                .addSomeMessage("message")
-//                .build();
-//    }
+    static RealmConfiguration realmConfig;
+    static RealmConfiguration realmConfigDefault;
 
     @Override
     public void onCreate() {
         super.onCreate();
 
         Realm.init(this);
-        RealmConfiguration realmConfig = new RealmConfiguration.Builder()
+
+        realmConfig = new RealmConfiguration.Builder()
                 .initialData( realm -> {
 //                        realm.createObject(WordModelRealm.class);
                 })
+                .name("userWords.realm")
                 .schemaVersion(8)
                 .migration(new Migration())
+                .modules(new MyWordModule())
                 .build();
-//        Realm.deleteRealm(realmConfig); // Delete Realm between app restarts.
-        Realm.setDefaultConfiguration(realmConfig);
 
-//        mNetComponent = DaggerNetComponent.builder()
-//                .appModule(new AppModule(this))
-//                .netModule(new NetModule("http://www.multitran.ru/"))
-////                .netModule(new NetModule())
-//                .build();
-        
+        realmConfigDefault = new RealmConfiguration.Builder()
+                .assetFile("defaultWords.realm")
+                .name("defaultWords.realm")
+                .modules(new MyTranslationModule())
+                .schemaVersion(0)
+                .build();
+        Realm.setDefaultConfiguration(realmConfig);
         initRxBus();
     }
+    @RealmModule(classes = { WordModelRealm.class })
+    private class MyWordModule {
+    }
+    @RealmModule(classes = { TranslationModelRealm.class })
+    private class MyTranslationModule {
+    }
+
 
     private void initRxBus() {
         bus = new RxEventBus();
@@ -66,7 +68,4 @@ public class App extends Application {
         return bus;
     }
 
-//    public NetComponent getNetComponent() {
-//        return mNetComponent;
-//    }
 }

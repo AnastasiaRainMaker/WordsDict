@@ -102,38 +102,6 @@ public class TranslateWordInteractorImpl implements TranslateWordInteractor {
                         },
                         throwable -> listener.onTranslationError("Не найдено")
                 );
-
-
-//        if (word.length() == 0) {
-//            listener.onTranslationFinished("Введено пустое значение", word, false);
-//            return;
-//        }
-
-//        try {
-//            BufferedReader reader = new BufferedReader(
-//                    new InputStreamReader(mContext.getAssets().open(Constants.ASSET_DICT_NAME_BIG), "Windows-1251"));
-//            String line = reader.readLine();
-//            String[] ss;
-//            while (line != null){
-//                line = reader.readLine();
-//                if (line != null){
-//                    ss = line.split(" - ");
-//                } else {
-//                    ss = null;
-//                }
-//                if (
-//                        (ss != null && ss.length > 1) &&
-//                        ((ss[0].replace(" ", "").equals(word)) ||
-//                        (ss[1].replace(" ", "").equals(word)))){
-//                    listener.onTranslationFinished(line.replace(" - ", "").replace(word, ""), word, false);
-//                    return;
-//                }
-//            }
-//            listener.onTranslationFinished("Не найдено", word, false);
-//        } catch (IOException e) {
-//            listener.onTranslationFinished("Не найдено", word, false);
-//            e.printStackTrace();
-//        }
     }
 
 }
