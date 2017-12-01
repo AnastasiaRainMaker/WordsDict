@@ -6,10 +6,6 @@ import com.dmitry.wordsdict.main.views.MainView;
 
 import io.reactivex.disposables.CompositeDisposable;
 
-/**
- * Created by dmitry on 5/28/17.
- */
-
 public class TranslatePresenterImpl implements TranslatePresenter, TranslateWordInteractor.OnFinishedListener {
 
     private MainView mainView;

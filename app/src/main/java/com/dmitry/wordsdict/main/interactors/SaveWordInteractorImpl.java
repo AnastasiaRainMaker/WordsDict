@@ -8,9 +8,6 @@ import java.util.Date;
 import io.realm.Realm;
 import io.realm.RealmObject;
 
-/**
- * Created by dmitry on 6/3/17.
- */
 
 public class SaveWordInteractorImpl implements SaveWordInteractor{
 

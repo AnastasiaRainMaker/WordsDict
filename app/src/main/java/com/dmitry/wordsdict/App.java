@@ -4,7 +4,7 @@ import android.app.Application;
 import android.os.SystemClock;
 import android.util.Log;
 
-import com.dmitry.wordsdict.model.TranslationModelRealm;
+import com.dmitry.wordsdict.model.WordPair;
 import com.dmitry.wordsdict.model.WordModelRealm;
 import com.dmitry.wordsdict.rxbus.Events;
 import com.dmitry.wordsdict.rxbus.RxEventBus;
@@ -16,8 +16,8 @@ import io.realm.annotations.RealmModule;
 public class App extends Application {
 
     private RxEventBus bus;
-    static RealmConfiguration realmConfig;
-    static RealmConfiguration realmConfigDefault;
+    public static RealmConfiguration realmConfig;
+   // public static RealmConfiguration realmConfigDefault;
 
     @Override
     public void onCreate() {
@@ -35,20 +35,21 @@ public class App extends Application {
                 .modules(new MyWordModule())
                 .build();
 
-        realmConfigDefault = new RealmConfiguration.Builder()
-                .assetFile("defaultWords.realm")
-                .name("defaultWords.realm")
-                .modules(new MyTranslationModule())
-                .schemaVersion(0)
-                .build();
+//        realmConfigDefault = new RealmConfiguration.Builder()
+//                .assetFile("defaultWords.realm")
+//                .name("defaultWords.realm")
+//                .modules(new MyTranslationModule())
+//                .schemaVersion(0)
+//                .build();
         Realm.setDefaultConfiguration(realmConfig);
         initRxBus();
+
     }
     @RealmModule(classes = { WordModelRealm.class })
     private class MyWordModule {
     }
-    @RealmModule(classes = { TranslationModelRealm.class })
-    private class MyTranslationModule {
+    @RealmModule(classes = { WordPair.class })
+    public static class MyTranslationModule {
     }
 
 
