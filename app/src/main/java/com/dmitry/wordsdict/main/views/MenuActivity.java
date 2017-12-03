@@ -22,6 +22,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.dmitry.wordsdict.Constants;
@@ -209,9 +210,14 @@ public class MenuActivity extends AppCompatActivity {
                 .setNegativeButton("Нет", (dialog, id) -> dialog.cancel());
         AlertDialog alert = builder.create();
         alert.show();
-//        TextView textView = alert.getWindow().findViewById(android.R.id.message);
-//        Typeface face=Typeface.createFromAsset(FontHelper.getFont(Fonts.MULI_BOLD));
-//        textView.setTypeface(face);
+        TextView textView = alert.findViewById(android.R.id.message);
+        Button button1 = alert.getWindow().findViewById(android.R.id.button1);
+        Button button2 = alert.getWindow().findViewById(android.R.id.button2);
+        Typeface face=Typeface.createFromAsset(getAssets(), "custom_font3.ttf");
+        assert textView != null;
+        textView.setTypeface(face);
+        button1.setTypeface(face);
+        button2.setTypeface(face);
 
     }
 

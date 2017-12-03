@@ -1,13 +1,12 @@
 package com.dmitry.wordsdict;
 
-/**
- * Created by dmitry on 6/3/17.
- */
 
 public final class Constants {
     public static final String MULTITRAN_CSS_SELECTOR = "body > table:nth-child(2) > tbody:nth-child(1) > tr:nth-child(1) > td:nth-child(2) > table:nth-child(1) > tbody:nth-child(1) > tr:nth-child(1) > td:nth-child(1) > table:nth-child(1) > tbody:nth-child(1) > tr:nth-child(2) > td:nth-child(1) > table:nth-child(1) > tbody:nth-child(1) > tr:nth-child(1) > td:nth-child(2) > table:nth-child(5)";
+    public static final String YANDEX_CSS_SELECTOR = "#translation > span > span";
     public static final String MULTITRAN_URL = "http://www.multitran.ru/c/M.exe?s=%s";
     public static final String MULTITRAN_URL_RUS = "https://www.multitran.ru/c/m.exe?l1=2&l2=1&s=%s";
+    public static final String YANDEX_URL_ENG = "https://translate.yandex.com/?lang=en-ru&text=%s";
     public static final String EXPORT_FILE_NAME = "/wordsDictExport.json/";
     public static String TAG = "WORDS_DICT";
     public static String REALM_WORD_NAME_KEY = "wordName";

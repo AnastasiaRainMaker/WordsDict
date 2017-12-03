@@ -22,16 +22,13 @@ public class SplashActivity extends Activity implements Runnable {
 
     @Override
     public void run(){
-        try
-        {
+        try {
             Thread.sleep(2000);
         }
-        catch (Exception e)
-        {
+        catch (Exception e) {
             e.printStackTrace();
         }
-        finally
-        {
+        finally {
             startActivity(new Intent(getApplicationContext(), MenuActivity.class));
 
             finish();

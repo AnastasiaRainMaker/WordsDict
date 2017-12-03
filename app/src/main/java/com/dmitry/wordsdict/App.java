@@ -1,9 +1,7 @@
 package com.dmitry.wordsdict;
-
 import android.app.Application;
 import android.os.SystemClock;
 import android.util.Log;
-
 import com.dmitry.wordsdict.model.WordPair;
 import com.dmitry.wordsdict.model.WordModelRealm;
 import com.dmitry.wordsdict.rxbus.Events;
@@ -17,7 +15,6 @@ public class App extends Application {
 
     private RxEventBus bus;
     public static RealmConfiguration realmConfig;
-   // public static RealmConfiguration realmConfigDefault;
 
     @Override
     public void onCreate() {
@@ -26,21 +23,12 @@ public class App extends Application {
         Realm.init(this);
 
         realmConfig = new RealmConfiguration.Builder()
-                .initialData( realm -> {
-//                        realm.createObject(WordModelRealm.class);
-                })
                 .name("userWords.realm")
                 .schemaVersion(8)
                 .migration(new Migration())
                 .modules(new MyWordModule())
                 .build();
 
-//        realmConfigDefault = new RealmConfiguration.Builder()
-//                .assetFile("defaultWords.realm")
-//                .name("defaultWords.realm")
-//                .modules(new MyTranslationModule())
-//                .schemaVersion(0)
-//                .build();
         Realm.setDefaultConfiguration(realmConfig);
         initRxBus();
 

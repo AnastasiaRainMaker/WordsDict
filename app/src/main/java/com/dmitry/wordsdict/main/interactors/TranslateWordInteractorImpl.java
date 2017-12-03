@@ -2,13 +2,10 @@ package com.dmitry.wordsdict.main.interactors;
 
 import android.content.Context;
 import android.util.Log;
-
 import com.dmitry.wordsdict.App;
 import com.dmitry.wordsdict.model.WordPair;
-
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
-import java.io.IOException;
 import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
@@ -17,9 +14,10 @@ import io.realm.Realm;
 import io.realm.RealmConfiguration;
 import io.realm.RealmResults;
 import static com.dmitry.wordsdict.Constants.MULTITRAN_CSS_SELECTOR;
-//import static com.dmitry.wordsdict.App.realmConfigDefault;
 import static com.dmitry.wordsdict.Constants.MULTITRAN_URL_RUS;
 import static com.dmitry.wordsdict.Constants.TAG;
+import static com.dmitry.wordsdict.Constants.YANDEX_CSS_SELECTOR;
+import static com.dmitry.wordsdict.Constants.YANDEX_URL_ENG;
 
 public class TranslateWordInteractorImpl implements TranslateWordInteractor {
 
@@ -36,13 +34,37 @@ public class TranslateWordInteractorImpl implements TranslateWordInteractor {
         this.mContext = mContext;
     }
 
+//    @Override public Disposable translateWord (final OnFinishedListener listener, String word) {
+//        if (word.length() > 0) {
+//            return Single.fromCallable(()-> Jsoup.connect(String.format(MULTITRAN_URL_RUS, word)).get())
+//                    .subscribeOn(Schedulers.io())
+//                    .observeOn(AndroidSchedulers.mainThread())
+//                    .subscribe(
+//                            res -> listener.onTranslationFinished(res.body().select(MULTITRAN_CSS_SELECTOR).text(), word, true),
+//                            throwable -> listener.onTranslationError(throwable.getMessage())
+//                    );
+//        } else {
+//            return Single.fromCallable(()-> "Введено пустое значение")
+//                    .subscribeOn(Schedulers.io())
+//                    .observeOn(AndroidSchedulers.mainThread())
+//                    .subscribe(
+//                            res -> listener.onTranslationFinished(res, word, true),
+//                            throwable -> {
+//                                listener.onTranslationError("Сервер временно недоступен.");
+//                                Log.d(TAG, throwable.getMessage());
+//                            }
+//                    );
+//        }
+//
+//    }
+
     @Override public Disposable translateWord (final OnFinishedListener listener, String word) {
         if (word.length() > 0) {
-            return Single.fromCallable(()-> Jsoup.connect(String.format(MULTITRAN_URL_RUS, word)).get())
+            return Single.fromCallable(()-> Jsoup.connect(String.format(YANDEX_URL_ENG, word)).get())
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(
-                            res -> listener.onTranslationFinished(res.body().select(MULTITRAN_CSS_SELECTOR).text(), word, true),
+                            res -> listener.onTranslationFinished(res.body().select(YANDEX_CSS_SELECTOR).text(), word, true),
                             throwable -> listener.onTranslationError(throwable.getMessage())
                     );
         } else {
