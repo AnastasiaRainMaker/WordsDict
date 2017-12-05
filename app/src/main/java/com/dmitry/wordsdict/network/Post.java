@@ -1,9 +1,7 @@
 package com.dmitry.wordsdict.network;
 
-/**
- * Created by Aditya on 09-May-16.
- */
 public class Post {
+
     String title;
     String body;
 

@@ -12,15 +12,11 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ActionMenuView;
 import android.widget.TextView;
-
 import com.dmitry.wordsdict.R;
 import com.dmitry.wordsdict.main.views.TranslationActivity;
 import com.dmitry.wordsdict.model.WordModelRealm;
-
 import java.text.DateFormat;
-
 import io.realm.OrderedRealmCollection;
 import io.realm.Realm;
 import io.realm.RealmRecyclerViewAdapter;
@@ -59,6 +55,7 @@ public class RealmWordsListAdapter extends RealmRecyclerViewAdapter<WordModelRea
     @SuppressLint("StringFormatMatches")
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
+        position = holder.getAdapterPosition();
         final WordModelRealm obj = getItem(position);
         holder.data = obj;
 
@@ -87,7 +84,7 @@ public class RealmWordsListAdapter extends RealmRecyclerViewAdapter<WordModelRea
                     obj.setSelected(true);
                 }
             });
-            selectedItem = position;
+            selectedItem = holder.getAdapterPosition();
             return true;
         });
         assert obj != null;

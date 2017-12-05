@@ -16,12 +16,9 @@ import io.realm.RealmResults;
 import static com.dmitry.wordsdict.Constants.MULTITRAN_CSS_SELECTOR;
 import static com.dmitry.wordsdict.Constants.MULTITRAN_URL_RUS;
 import static com.dmitry.wordsdict.Constants.TAG;
-import static com.dmitry.wordsdict.Constants.YANDEX_CSS_SELECTOR;
-import static com.dmitry.wordsdict.Constants.YANDEX_URL_ENG;
 
 public class TranslateWordInteractorImpl implements TranslateWordInteractor {
 
-    private Context mContext;
     private Realm mRealm;
     private RealmConfiguration realmConfigDefault = new RealmConfiguration.Builder()
             .assetFile("defaultWords.realm")
@@ -31,40 +28,15 @@ public class TranslateWordInteractorImpl implements TranslateWordInteractor {
             .build();
 
     public TranslateWordInteractorImpl(Context mContext) {
-        this.mContext = mContext;
     }
-
-//    @Override public Disposable translateWord (final OnFinishedListener listener, String word) {
-//        if (word.length() > 0) {
-//            return Single.fromCallable(()-> Jsoup.connect(String.format(MULTITRAN_URL_RUS, word)).get())
-//                    .subscribeOn(Schedulers.io())
-//                    .observeOn(AndroidSchedulers.mainThread())
-//                    .subscribe(
-//                            res -> listener.onTranslationFinished(res.body().select(MULTITRAN_CSS_SELECTOR).text(), word, true),
-//                            throwable -> listener.onTranslationError(throwable.getMessage())
-//                    );
-//        } else {
-//            return Single.fromCallable(()-> "Введено пустое значение")
-//                    .subscribeOn(Schedulers.io())
-//                    .observeOn(AndroidSchedulers.mainThread())
-//                    .subscribe(
-//                            res -> listener.onTranslationFinished(res, word, true),
-//                            throwable -> {
-//                                listener.onTranslationError("Сервер временно недоступен.");
-//                                Log.d(TAG, throwable.getMessage());
-//                            }
-//                    );
-//        }
-//
-//    }
 
     @Override public Disposable translateWord (final OnFinishedListener listener, String word) {
         if (word.length() > 0) {
-            return Single.fromCallable(()-> Jsoup.connect(String.format(YANDEX_URL_ENG, word)).get())
+            return Single.fromCallable(()-> Jsoup.connect(String.format(MULTITRAN_URL_RUS, word)).get())
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(
-                            res -> listener.onTranslationFinished(res.body().select(YANDEX_CSS_SELECTOR).text(), word, true),
+                            res -> listener.onTranslationFinished(res.body().select(MULTITRAN_CSS_SELECTOR).text(), word, true),
                             throwable -> listener.onTranslationError(throwable.getMessage())
                     );
         } else {
@@ -78,11 +50,10 @@ public class TranslateWordInteractorImpl implements TranslateWordInteractor {
                                 Log.d(TAG, throwable.getMessage());
                             }
                     );
-        }
+             }
 
-    }
+     }
 
-    // not used yet
     @Override public Disposable translateWordRus(final OnFinishedListener listener, String word) {
         return Single.fromCallable(()-> Jsoup.connect(String.format(MULTITRAN_URL_RUS, word)).get())
                 .subscribeOn(Schedulers.io())
@@ -99,7 +70,6 @@ public class TranslateWordInteractorImpl implements TranslateWordInteractor {
     }
 
     @Override public Disposable translateWordOffline(final OnFinishedListener listener, String word) {
-
         return Single.fromCallable(()-> {
             if (word.length() == 0) {
                 return "Введено пустое значение";
@@ -114,36 +84,16 @@ public class TranslateWordInteractorImpl implements TranslateWordInteractor {
                      for (WordPair resultItem: result) {
                          String wPair = resultItem.getWordPair();
                          String[] newWPair = wPair.split(" - ");
-                         if (newWPair[0].replace(" ","").equals(word) || newWPair[0].replace(" ","").length() == word.length()){
+                         if (newWPair[0].replace(" ","").equals(word) && newWPair[0].replace(" ","").length() == word.length()){
                              res += newWPair[1].replace(" ","");
                              res += "\n";
-                         } else if(newWPair[1].replace(" ","").equals(word) || newWPair[1].replace(" ","").length() == word.length()){
+                         } else if(newWPair[1].replace(" ","").equals(word) && newWPair[1].replace(" ","").length() == word.length()){
                              res += newWPair[0].replace(" ","");
                              res += "\n";
                          }
                      }
                  }
                  return res.substring(0, res.length() - 1);
-
-
-//                BufferedReader reader = new BufferedReader(
-//                        new InputStreamReader(mContext.getAssets().open(Constants.ASSET_DICT_NAME_BIG), "Windows-1251"));
-//                String line = reader.readLine();
-//                String[] ss;
-//                while (line != null){
-//                    line = reader.readLine();
-//                    if (line != null){
-//                        ss = line.split(" - ");
-//                    } else {
-//                        ss = null;
-//                    }
-//                    if (
-//                            (ss != null && ss.length > 1) &&
-//                                    ((ss[0].replace(" ", "").equals(word)) ||
-//                                            (ss[1].replace(" ", "").equals(word)))){
-//                        return line.replace(" - ", "").replace(word, "");
-//                    }
-//                }
             } catch (Exception e) {
                 return "Не найдено";
             }

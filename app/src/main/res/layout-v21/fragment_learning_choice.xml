@@ -10,22 +10,6 @@
         android:layout_height="140dp"
         android:background="@drawable/leraning_choice_img"/>
 
-    <!--<TextView-->
-        <!--android:id="@+id/learning_label_choice_f"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_marginEnd="8dp"-->
-        <!--android:layout_marginStart="8dp"-->
-        <!--android:layout_marginTop="0dp"-->
-        <!--android:text="@string/hello_blank_fragment"-->
-        <!--android:textAlignment="center"-->
-        <!--android:textColor="@color/colorAccent"-->
-        <!--android:textSize="24sp"-->
-        <!--app:layout_constraintBottom_toTopOf="@+id/learning_mydict_word_button"-->
-        <!--app:layout_constraintEnd_toEndOf="parent"-->
-        <!--app:layout_constraintStart_toStartOf="parent"-->
-        <!--app:layout_constraintTop_toTopOf="parent" />-->
-
     <Button
         android:fontFamily="@font/custom_font3"
         android:id="@+id/learning_mydict_word_button"
@@ -35,7 +19,7 @@
         android:layout_marginStart="0dp"
         android:layout_marginTop="10dp"
         android:background="@drawable/buttot_round"
-        android:text="Мой словарь"
+        android:text="@string/my_dictionary"
         android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -54,7 +38,7 @@
         android:layout_marginTop="70dp"
         android:background="@drawable/buttot_round"
         android:textColor="@color/white"
-        android:text="Случайные слова"
+        android:text="@string/random_words"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/learning_mydict_word_button" />

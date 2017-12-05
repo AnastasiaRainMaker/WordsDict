@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/learning_main_constraint"
     android:layout_width="fill_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -16,7 +15,7 @@
         android:layout_marginTop="8dp"
         android:fontFamily="@font/custom_font3"
         android:gravity="center"
-        android:text="Для изучения необходимо добавить слова в справочник. Для этого воспользуйтесь быстрым переводом."
+        android:text="@string/no_words_for_learning"
         android:textAlignment="center"
         android:textColor="@color/colorPrimaryDark"
         android:textColorHighlight="@color/colorAccent"
@@ -45,7 +44,6 @@
         app:layout_constraintTop_toBottomOf="@+id/learning_donexfromy_textview" />
 
     <android.support.constraint.Guideline
-        android:id="@+id/guideline7"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -58,7 +56,7 @@
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:text="Введите перевод:"
+        android:text="@string/enter_translation"
         android:textColor="@color/colorAccent"
 
         app:layout_constraintBottom_toTopOf="@+id/learning_translationedittext"
@@ -73,7 +71,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:fontFamily="@font/custom_font3"
-        android:text="done x from y"
+        android:text="@string/done_x_from_y"
         android:textColor="@color/colorAccent"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"

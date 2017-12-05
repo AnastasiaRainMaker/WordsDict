@@ -7,16 +7,15 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Typeface;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
-import android.support.annotation.RequiresApi;
+import android.support.annotation.NonNull;
 import android.support.design.internal.BottomNavigationMenuView;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.view.ContextThemeWrapper;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
@@ -31,13 +30,10 @@ import com.dmitry.wordsdict.model.WordModelRealm;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileReader;
 import java.io.FileWriter;
-import java.io.IOException;
 import java.io.Writer;
 import io.realm.Realm;
 import io.realm.RealmObject;
@@ -47,12 +43,10 @@ import static com.dmitry.wordsdict.Constants.REQ_CODE;
 
 public class MenuActivity extends AppCompatActivity {
 
-    Toolbar mainToolbar;
-    BottomNavigationView bottomNavigationView;
-
+    private Toolbar mainToolbar;
+    private BottomNavigationView bottomNavigationView;
     private final int FILE_SELECT_CODE = 0;
 
-    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,12 +55,15 @@ public class MenuActivity extends AppCompatActivity {
         applyBottomNavFont();
         mainToolbar = findViewById(R.id.toolbar_main);
         setSupportActionBar(mainToolbar);
-        FragmentMenu fragment = new FragmentMenu();
-        getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.menu_frame, fragment)
-                .commit();
 
+        Fragment fr = getSupportFragmentManager().findFragmentById(R.id.menu_frame);
+        if (fr == null) {
+            FragmentMenu  fragment = new FragmentMenu();
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.menu_frame, fragment)
+                    .commit();
+        }
 
         bottomNavigationView.setOnNavigationItemSelectedListener(
                 item -> {
@@ -85,7 +82,7 @@ public class MenuActivity extends AppCompatActivity {
                     }  else {
                         getSupportFragmentManager()
                                 .beginTransaction()
-                                .replace(R.id.menu_frame, fragment)
+                                .replace(R.id.menu_frame, new FragmentMenu())
                                 .commit();
                     }
                     return true;
@@ -93,8 +90,6 @@ public class MenuActivity extends AppCompatActivity {
     }
 
     private void applyBottomNavFont() {
-        // The BottomNavigationView widget doesn't provide a native way to set the appearance of
-        // the text views. So we have to hack in to the view hierarchy here.
         for (int i = 0; i < bottomNavigationView.getChildCount(); i++) {
             View child = bottomNavigationView.getChildAt(i);
             if (child instanceof BottomNavigationMenuView) {
@@ -129,8 +124,7 @@ public class MenuActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_save:
-                //setUpExportButton();
-                getUserPermission();
+               getUserPermission();
                 return true;
 
             case R.id.action_send:
@@ -165,7 +159,6 @@ public class MenuActivity extends AppCompatActivity {
                     Intent.createChooser(intent, "Select a File to Upload"),
                     FILE_SELECT_CODE);
         } catch (android.content.ActivityNotFoundException ex) {
-            // Potentially direct the user to the Market with a Dialog
             Toast.makeText(this, "Please install a File Manager.",
                     Toast.LENGTH_SHORT).show();
         }
@@ -177,6 +170,7 @@ public class MenuActivity extends AppCompatActivity {
             case FILE_SELECT_CODE:
                 if (resultCode == RESULT_OK) {
                     Uri uri = data.getData();
+                    assert uri != null;
                     Log.d(Constants.TAG, "File Uri: " + uri.toString());
                     String path = getPath(this, uri);
                     Log.d(Constants.TAG, "File Path: " + path);
@@ -211,12 +205,14 @@ public class MenuActivity extends AppCompatActivity {
         AlertDialog alert = builder.create();
         alert.show();
         TextView textView = alert.findViewById(android.R.id.message);
-        Button button1 = alert.getWindow().findViewById(android.R.id.button1);
-        Button button2 = alert.getWindow().findViewById(android.R.id.button2);
+        Button button1 = alert.findViewById(android.R.id.button1);
+        Button button2 = alert.findViewById(android.R.id.button2);
         Typeface face=Typeface.createFromAsset(getAssets(), "custom_font3.ttf");
         assert textView != null;
         textView.setTypeface(face);
+        assert button1 != null;
         button1.setTypeface(face);
+        assert button2 != null;
         button2.setTypeface(face);
 
     }
@@ -267,7 +263,7 @@ public class MenuActivity extends AppCompatActivity {
         }
     }
 
-    public String getPath(Context context, Uri uri){
+    private String getPath(Context context, Uri uri){
         if ("content".equalsIgnoreCase(uri.getScheme())) {
             String[] projection = { "_data" };
             Cursor cursor = null;
@@ -310,35 +306,13 @@ public class MenuActivity extends AppCompatActivity {
         }
         if (outputDir != null) {
             try {
-                String strOutput = getExportJson().toString();
-                if (strOutput != null) {
-                   if(!file.exists()) {
-                       Writer output = new BufferedWriter(new FileWriter(file));
-                       output.write(strOutput);
-                       output.close();
+                JSONArray output = getExportJson();
+                if (output != null) {
+                    String strOutput = getExportJson().toString();
+                    Writer finalOutput = new BufferedWriter(new FileWriter(file));
+                    finalOutput.write(strOutput);
+                    finalOutput.close();
                        Toast.makeText(getApplicationContext(), "Файл wordsDictExport.json сохранен в папке Download", Toast.LENGTH_LONG).show();
-                   } else {
-                       StringBuilder text = new StringBuilder();
-                       try {
-                           BufferedReader br = new BufferedReader(new FileReader(file));
-                           String line;
-                           while ((line = br.readLine()) != null) {
-                               text.append(line);
-                               text.append('\n');
-                           }
-                           br.close() ;
-                       } catch (IOException e) {
-                           e.printStackTrace();
-                       }
-                       String newStrOutput = getExportJson().toString();
-                       String newMergedOutput = text + newStrOutput;
-                       String dedupedOutput = deDup(newMergedOutput);
-
-                       Writer output = new BufferedWriter(new FileWriter(file));
-                       output.write(dedupedOutput);
-                       output.close();
-                       Toast.makeText(getApplicationContext(), "Файл wordsDictExport.json сохранен в папке Download", Toast.LENGTH_LONG).show();
-                   }
                 } else {
                     Toast.makeText(getApplicationContext(), "Невозможно записать файл из пустого словаря", Toast.LENGTH_LONG).show();
                 }
@@ -353,24 +327,16 @@ public class MenuActivity extends AppCompatActivity {
                     Toast.LENGTH_SHORT).show();
         }
     }
-    public String deDup(String s) {
-        return s.replaceAll("(\\b\\w+\\b)-(?=.*\\b\\1\\b)", "");
-    }
 
     @Override
     public void onRequestPermissionsResult(int requestCode,
-                                           String permissions[], int[] grantResults) {
+                                           @NonNull String permissions[], @NonNull int[] grantResults) {
         switch (requestCode) {
             case REQ_CODE: {
-                // If request is cancelled, the result arrays are empty.
-                if (grantResults.length > 0
-                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 setUpExportButton();
-
                 } else {
-                    Toast.makeText(this,
-                            this.getResources().getString(R.string.error_can_not_write_file),
-                            Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, this.getResources().getString(R.string.error_can_not_write_file), Toast.LENGTH_SHORT).show();
                 }
             }
         }

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:background="@drawable/word_row_selector"
@@ -10,7 +11,7 @@
         android:layout_width="match_parent"
         android:id="@+id/word_title"
         android:textAlignment="center"
-        android:text="name"
+        android:text="@string/name"
         android:layout_weight="1"
         android:textColor="@color/colorPrimaryDark"
         android:textSize="25sp"
@@ -29,7 +30,8 @@
             android:textAlignment="center"
             android:layout_weight="1"
             android:textColor="@color/colorPrimary"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            tools:ignore="NestedWeights" />
 
         <TextView
             android:fontFamily="@font/custom_font3"

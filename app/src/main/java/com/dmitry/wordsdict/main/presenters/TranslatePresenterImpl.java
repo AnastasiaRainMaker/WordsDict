@@ -3,7 +3,6 @@ package com.dmitry.wordsdict.main.presenters;
 import com.dmitry.wordsdict.main.interactors.SaveWordInteractorImpl;
 import com.dmitry.wordsdict.main.interactors.TranslateWordInteractor;
 import com.dmitry.wordsdict.main.views.MainView;
-
 import io.reactivex.disposables.CompositeDisposable;
 
 public class TranslatePresenterImpl implements TranslatePresenter, TranslateWordInteractor.OnFinishedListener {
@@ -18,13 +17,6 @@ public class TranslatePresenterImpl implements TranslatePresenter, TranslateWord
         this.translateWordInteractor = translateWordInteractor;
         this.saveWordInteractor = saveWordInteractor;
         mSubscriptions = new CompositeDisposable();
-    }
-
-    @Override
-    public void onResume() {
-//        if (mainView != null) {
-//            mainView.showProgress();
-//        }
     }
 
     @Override
@@ -55,10 +47,6 @@ public class TranslatePresenterImpl implements TranslatePresenter, TranslateWord
         mainView = null;
         if (mSubscriptions != null && !mSubscriptions.isDisposed())
             mSubscriptions.dispose();
-    }
-
-    public MainView getMainView() {
-        return mainView;
     }
 
     @Override

@@ -12,10 +12,6 @@ import com.dmitry.wordsdict.main.views.ListWordsView;
 
 import io.realm.Realm;
 
-/**
- * Created by dmitry on 6/3/17.
- */
-
 public class ListWordsPresenterImpl implements ListWordsPresenter {
 
     private ListWordsInteractorImpl listWordsInteractorImpl;
@@ -26,10 +22,9 @@ public class ListWordsPresenterImpl implements ListWordsPresenter {
     }
     private Realm mRealm;
     private static final int SPAN_COUNT = 2;
-    private RealmWordsListAdapter mAdapter;
 
-    protected LayoutManagerType mCurrentLayoutManagerType;
-    protected RecyclerView.LayoutManager mLayoutManager;
+    private LayoutManagerType mCurrentLayoutManagerType;
+    private RecyclerView.LayoutManager mLayoutManager;
 
     public ListWordsPresenterImpl(ListWordsView listWordsView, ListWordsInteractorImpl listWordsInteractorImpl) {
         this.listWordsView = listWordsView;
@@ -38,24 +33,8 @@ public class ListWordsPresenterImpl implements ListWordsPresenter {
     }
 
     @Override
-    public void onResume() {
-
-    }
-
-    @Override
-    public void onDestroy() {
-        listWordsView = null;
-        mRealm.close();
-    }
-
-    @Override
     public void showError() {
 
-    }
-
-    @Override
-    public void toggleSelectionMode() {
-//        mAdapter.enableSeletionMode(!mAdapter.inSeletionMode);
     }
 
     private void setRecyclerViewLayoutManager(LayoutManagerType layoutManagerType, RecyclerView mRecyclerView, Activity activity) {
@@ -87,7 +66,7 @@ public class ListWordsPresenterImpl implements ListWordsPresenter {
         mLayoutManager = new LinearLayoutManager(activity);
         mCurrentLayoutManagerType = LayoutManagerType.LINEAR_LAYOUT_MANAGER;
         setRecyclerViewLayoutManager(mCurrentLayoutManagerType, recycler, activity);
-        mAdapter = listWordsInteractorImpl.setUpListWordsAdapter(activity, mRealm);
+        RealmWordsListAdapter mAdapter = listWordsInteractorImpl.setUpListWordsAdapter(activity, mRealm);
         if (mAdapter.getData().size() == 0) {
             listWordsView.showError("Словарь пуст. Для добавления слов воспользуйтесь быстрым переводом");
         }

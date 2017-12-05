@@ -1,16 +1,15 @@
 package com.dmitry.wordsdict.main.views;
 
-import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.internal.BottomNavigationItemView;
 import android.support.design.internal.BottomNavigationMenuView;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -37,9 +36,8 @@ public class LearningActivity extends AppCompatActivity implements LearningView 
     private int taskType;
     private SaveWordInteractorImpl saveWordInteractor;
     private String translation;
-    BottomNavigationViewEx bottomNavigationView;
+    private BottomNavigationViewEx bottomNavigationView;
 
-    @SuppressLint("RestrictedApi")
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,8 +48,6 @@ public class LearningActivity extends AppCompatActivity implements LearningView 
         bottomNavigationView = findViewById(R.id.bottom_navigation_learning);
         BottomNavigationMenuView menuView = (BottomNavigationMenuView) bottomNavigationView.getChildAt(0);
         for (int i = 0; i < menuView.getChildCount(); i++) {
-            BottomNavigationItemView itemView = (BottomNavigationItemView) menuView.getChildAt(i);
-            itemView.setChecked(false);
             bottomNavigationView.enableAnimation(false);
             bottomNavigationView.enableShiftingMode(false);
             bottomNavigationView.enableItemShiftingMode(false);
@@ -72,7 +68,6 @@ public class LearningActivity extends AppCompatActivity implements LearningView 
                 saveWordInteractor = new SaveWordInteractorImpl();
                 return true;
             });
-
         } else {
             Menu menu = bottomNavigationView.getMenu();
             MenuItem upWordItem = menu.findItem(R.id.learning_up_word_item);
@@ -101,8 +96,6 @@ public class LearningActivity extends AppCompatActivity implements LearningView 
     }
 
     private void applyBottomNavFont() {
-        // The BottomNavigationView widget doesn't provide a native way to set the appearance of
-        // the text views. So we have to hack in to the view hierarchy here.
         for (int i = 0; i < bottomNavigationView.getChildCount(); i++) {
             View child = bottomNavigationView.getChildAt(i);
             if (child instanceof BottomNavigationMenuView) {
@@ -134,7 +127,7 @@ public class LearningActivity extends AppCompatActivity implements LearningView 
                 showError(String.format("Слово '%s' добавлено в словарь", word));
                 dialog.dismiss();
             } else {
-                showError(String.format("Значение не может быть пустым", word));
+                showError(String.format("Значение '%s' не может быть пустым", word));
             }
         });
         dialog.show();
@@ -180,11 +173,16 @@ public class LearningActivity extends AppCompatActivity implements LearningView 
             runWordAnimation(wordTextView, true);
         } else {
             runWordAnimation(wordTextView, false);
-            Toast toast = Toast.makeText(this,
-                    getResources().getString(R.string.learning_wrong_translation),
-                    Toast.LENGTH_SHORT);
-            toast.setGravity(Gravity.CENTER, 0, 0);
-            toast.show();
+            AlertDialog alert = new AlertDialog.Builder(this).create();
+            alert.setMessage(getResources().getString(R.string.learning_wrong_translation));
+            alert.setButton("OK", (dialogInterface, i) -> alert.dismiss());
+            alert.show();
+            TextView textView = alert.findViewById(android.R.id.message);
+            Button button1 = alert.findViewById(android.R.id.button1);
+            Typeface face=Typeface.createFromAsset(getAssets(), "custom_font3.ttf");
+            assert textView != null;
+            textView.setTypeface(face);
+            button1.setTypeface(face);
         }
     }
 
@@ -215,16 +213,6 @@ public class LearningActivity extends AppCompatActivity implements LearningView 
         translationEditText.setVisibility(View.GONE);
         doneXfromYTextView.setVisibility(View.GONE);
         TextViewHint.setVisibility(View.GONE);
-    }
-
-    @Override
-    public void showProgress() {
-
-    }
-
-    @Override
-    public void hideProgress() {
-
     }
 
     @Override
@@ -269,11 +257,6 @@ public class LearningActivity extends AppCompatActivity implements LearningView 
 
             }
         });
-    }
-
-    @Override
-    public void setError() {
-
     }
 
     @Override

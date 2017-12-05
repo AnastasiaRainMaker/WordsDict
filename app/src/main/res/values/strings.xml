@@ -1,21 +1,10 @@
 <resources>
     <string name="app_name">Ultimate vocabulary</string>
     <string name="word_frequency_text">Встречалось %s раз</string>
-    <string name="title_activity_menu">MenuActivity</string>
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
-    <string name="title_fast_translation">Быстрый перевод</string>
-    <string name="title_open_dictionary">Мой словарь</string>
-    <string name="title_open_learning">Обучение</string>
-    <string name="checkbox_edit_mode_text">Режим редактирования</string>
     <string name="context_remove_word">Удалить слово</string>
-    <string name="context_reset_stat">Сбросить статистику</string>
-    <string name="context_up">Поднять сложность</string>
     <string name="context_diff_up">Поднять сложность</string>
     <string name="context_diff_down">Понизить сложность</string>
     <string name="string_export_to_file">Сохранить все в файл</string>
-    <string name="send_db_by_bluetooth">Отправить</string>
     <string name="error_can_not_write_file">Ошибка при попытке записать файл</string>
     <string name="error_can_not_get_file">Ошибка получения файла</string>
     <string name="error_reading_file">Ошибка чтения файла %1$s</string>
@@ -23,15 +12,30 @@
     <string name="doneXfromY">Пройдено %1$d из %2$d</string>
     <string name="learning_completed">Изучение завершено</string>
     <string name="learning_wrong_translation">Введенное значение не соответствует вариантам перевода</string>
-    <string name="learning_up_priority">Поднять приоритет слова</string>
-    <string name="learning_word_priority_increased">Приорите поднят. Теперь равен %1$d</string>
     <string name="load_file">Загрузить из файла</string>
     <string name="about">О программе</string>
     <string name="type_the_word">Введите слово</string>
     <string name="please_wait">Пожалуйста, подождите</string>
     <string name="entered_empty_str">Нет перевода</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Варианты обучения:</string>
-    <string name="learning_add_to_dict">Добавить в мой словарь</string>
+    <string name="app_descr">Приложение Ultimate vocabulary- помощник в переводе слов как с русского языка на английский,так и с английского на русский. При переводе слова автоматически сохраняются в пользовательский словарь и доступны для дальнейшего просмотра и изучения. Для расширенного перевода используется словарь www.multitran.ru. Доступны несколько режимов обучения, а также возможность сохранения и загрузки базы данных слов.</string>
+    <string name="add_transl">Введите перевод слова:</string>
+    <string name="priority">Приоритет</string>
+    <string name="skip">Пропустить</string>
+    <string name="check">Проверить</string>
+    <string name="translation">Перевод</string>
+    <string name="my_dectionary">Мой словарь</string>
+    <string name="learning">Обучение</string>
+    <string name="my_dictionary">Мой словарь</string>
+    <string name="random_words">Случайные слова</string>
+    <string name="enter_word">Введите слово</string>
+    <string name="enter_words">Введите слово</string>
+    <string name="ok">Ok</string>
+    <string name="adv_search">Расширенный поиск</string>
+    <string name="go">Go</string>
+    <string name="find_more">Искать еще</string>
+    <string name="enter_trans">Введите перевод:</string>
+    <string name="no_words_for_learning">Для изучения необходимо добавить слова в справочник. Для этого воспользуйтесь быстрым переводом.</string>
+    <string name="enter_translation">Введите перевод:</string>
+    <string name="done_x_from_y">done x from y</string>
+    <string name="name">name</string>
 </resources>

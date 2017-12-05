@@ -4,9 +4,8 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.graphics.Color;
-import android.graphics.PorterDuff;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.text.Spannable;
@@ -18,9 +17,7 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ProgressBar;
 import android.widget.TextView;
-
 import com.dmitry.wordsdict.R;
 import com.dmitry.wordsdict.main.interactors.SaveWordInteractorImpl;
 import com.dmitry.wordsdict.main.presenters.TranslatePresenterImpl;
@@ -28,26 +25,31 @@ import com.dmitry.wordsdict.main.interactors.TranslateWordInteractorImpl;
 
 public class FragmentMenu extends Fragment implements MainView, View.OnClickListener {
 
-    private ProgressBar progressBar;
     private TranslatePresenterImpl translatePresenter;
     private EditText translationEditText;
     private EditText wordEditText;
     private TextView wordTextView;
-    private Button translateButton;
     private Button advancedTranslateButton;
     private ProgressDialog mProgressDialog;
     private String word;
-
+    private MenuActivity mActivity;
+    private Boolean advancedBtnShow = false;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        mActivity = (MenuActivity) context;
+    }
+
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_menu,
                 container, false);
+
         initDialog();
-        translateButton = view.findViewById(R.id.button_main_do_translate);
+        Button translateButton = view.findViewById(R.id.button_main_do_translate);
         translateButton.setOnClickListener(this);
-        progressBar = view.findViewById(R.id.progress_bar_main);
         translationEditText = view.findViewById(R.id.trans_editText);
         wordEditText = view.findViewById(R.id.main_word_editText);
         wordTextView = view.findViewById(R.id.word_textview_hint);
@@ -57,7 +59,6 @@ public class FragmentMenu extends Fragment implements MainView, View.OnClickList
         translatePresenter = new TranslatePresenterImpl(this,
                 new TranslateWordInteractorImpl(getContext()),
                 new SaveWordInteractorImpl());
-
         return view;
     }
 
@@ -65,16 +66,21 @@ public class FragmentMenu extends Fragment implements MainView, View.OnClickList
     public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
         super.onViewStateRestored(savedInstanceState);
         if (savedInstanceState != null) {
+            advancedBtnShow = savedInstanceState.getBoolean("advancedBtnShow");
             word = savedInstanceState.getString("word");
+            String translation = savedInstanceState.getString("translation");
+            if (wordTextView != null) {
+                wordTextView.setText(word);
+            }
+            if (translationEditText != null) {
+                translationEditText.setText(translation);
+            }
+            if (advancedBtnShow) {
+                advancedTranslateButton.setVisibility(View.VISIBLE);
+            } else {
+                advancedTranslateButton.setVisibility(View.GONE);
+            }
         }
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        if (wordTextView != null)
-            wordTextView.setText(word);
-        translatePresenter.onResume();
     }
 
     @Override
@@ -85,14 +91,11 @@ public class FragmentMenu extends Fragment implements MainView, View.OnClickList
     }
 
     @Override
-    public void onSaveInstanceState(Bundle outState) {
-        outState.putString("word", word);
-        super.onSaveInstanceState(outState);
-    }
-
-    @Override
-    public void prepareView() {
-
+    public void onSaveInstanceState(@NonNull Bundle savedInstanceState) {
+        savedInstanceState.putString("word", wordTextView.getText().toString());
+        savedInstanceState.putString("translation", translationEditText.getText().toString());
+        savedInstanceState.putBoolean("advancedBtnShow", advancedBtnShow);
+        super.onSaveInstanceState(savedInstanceState);
     }
 
     @Override public void showProgress() {
@@ -108,28 +111,26 @@ public class FragmentMenu extends Fragment implements MainView, View.OnClickList
     public void showTranslation(String translation, Boolean isAdvSearch) {
         if (!isAdvSearch && !translation.equals(getResources().getString(R.string.entered_empty_str)))
             advancedTranslateButton.setVisibility(View.VISIBLE);
-        String mainText = translation;
+        advancedBtnShow = true;
         String textToSelect = word;
-        translationEditText.setText(mainText);
+        translation = translation.replaceAll("\\w\\)", "").replaceAll("[()|\\[\\]{}]"," ");
+        translationEditText.setText(translation);
 
         // highlight the word
-        int selTextIndex = mainText.indexOf(textToSelect, 0);
+        int selTextIndex = translation.indexOf(textToSelect, 0);
         Spannable WordtoSpan = new SpannableString( translationEditText.getText() );
-        for(int ofs = 0; ofs < mainText.length() && selTextIndex != -1; ofs = selTextIndex + 1)
-        {
-            selTextIndex = mainText.indexOf(textToSelect, ofs);
+        for(int ofs = 0; ofs < translation.length() && selTextIndex != -1; ofs = selTextIndex + 1) {
+            selTextIndex = translation.indexOf(textToSelect, ofs);
             if(selTextIndex == -1)
                 break;
             else {
-                WordtoSpan.
-                        setSpan(
-                                new BackgroundColorSpan(Color.parseColor("#FF4081")),
-                                selTextIndex,
-                                selTextIndex+textToSelect.length(),
-                                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
-                        );
-                translationEditText
-                        .setText(WordtoSpan, TextView.BufferType.SPANNABLE);
+                WordtoSpan.setSpan(
+                    new BackgroundColorSpan(Color.parseColor("#FF4081")),
+                    selTextIndex,
+                    selTextIndex+textToSelect.length(),
+                    Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+                );
+                translationEditText.setText(WordtoSpan, TextView.BufferType.SPANNABLE);
                 translationEditText.setBackgroundResource(R.color.background_main_color);
 
             }
@@ -137,26 +138,11 @@ public class FragmentMenu extends Fragment implements MainView, View.OnClickList
     }
 
     @Override
-    public void setUpLearning() {
-
-    }
-
-    @Override
-    public void setUpShowAll() {
-
-    }
-
-    @Override
-    public void setError() {
-
-    }
-
-    @Override
     public void showError(String text) {
         if (mProgressDialog.isShowing()){
             mProgressDialog.dismiss();
         }
-        final Dialog dialog = new Dialog(getActivity());
+        final Dialog dialog = new Dialog(mActivity);
         dialog.setContentView(R.layout.error_dialog);
         ((TextView) dialog.findViewById(R.id.dialog_info)).setText(text);
         dialog.setTitle("Уведомление");
@@ -167,9 +153,9 @@ public class FragmentMenu extends Fragment implements MainView, View.OnClickList
 
     @Override
     public void hideKeyBoard() {
-        View view = getActivity().getCurrentFocus();
+        View view = mActivity.getCurrentFocus();
         if (view != null) {
-            InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+            InputMethodManager imm = (InputMethodManager)mActivity.getSystemService(Context.INPUT_METHOD_SERVICE);
             assert imm != null;
             imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
@@ -194,12 +180,14 @@ public class FragmentMenu extends Fragment implements MainView, View.OnClickList
                 word = String.format("%s", wordEditText.getText());
                 translatePresenter.onTranslateButtonClicked(word);
                 if (wordTextView != null)
-                    wordTextView.setText(word);
+                wordTextView.setText(word);
+                translationEditText.setBackgroundResource(R.color.white);
                 wordEditText.setText("");
                 break;
             }
             case R.id.advanced_search_button: {
                 translatePresenter.onAdvancedTranslateButtonClicked(word);
+                advancedBtnShow = false;
                 if (wordTextView != null)
                     wordTextView.setText(word);
                 wordEditText.setText("");

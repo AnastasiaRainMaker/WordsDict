@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_height="match_parent"
     android:layout_width="match_parent"
     >
@@ -9,28 +10,29 @@
         android:id="@+id/learning_show_translation_item"
         android:enabled="true"
         android:icon="@drawable/ic_translate"
-        android:title="Перевод"
-        app:showAsAction="always"/>
+        android:title="@string/translation"
+        app:showAsAction="always"
+        tools:ignore="AlwaysShowAction" />
 
     <item
         android:id="@+id/learning_up_word_item"
         android:enabled="true"
         android:icon="@drawable/ic_priority"
-        android:title="Приоритет"
+        android:title="@string/priority"
         app:showAsAction="always"/>
 
     <item
         android:id="@+id/learning_skip_item"
         android:enabled="true"
         android:icon="@drawable/ic_next"
-        android:title="Пропустить"
+        android:title="@string/skip"
         app:showAsAction="always"/>
 
     <item
         android:id="@+id/learning_check_item"
         android:enabled="true"
         android:icon="@drawable/ic_check"
-        android:title="Проверить"
+        android:title="@string/check"
         app:showAsAction="always"/>
 
 

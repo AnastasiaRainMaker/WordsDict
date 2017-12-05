@@ -10,10 +10,6 @@ import android.widget.TextView;
 
 import com.dmitry.wordsdict.R;
 
-/**
- * Created by dmitry on 6/3/17.
- */
-
 public class TranslationActivity extends AppCompatActivity {
 
     @Override
@@ -24,26 +20,23 @@ public class TranslationActivity extends AppCompatActivity {
 
         String mainText = getIntent().getStringExtra("translation");
         String textToSelect = getIntent().getStringExtra("word");
+        mainText = mainText.replaceAll("\\(.*?\\) ?", "");
         translationView.setText(mainText);
 
         int selTextIndex = mainText.indexOf(textToSelect, 0);
-        Spannable WordtoSpan = new SpannableString( translationView.getText() );
-        for(int ofs = 0; ofs < mainText.length() && selTextIndex != -1; ofs = selTextIndex + 1)
-        {
+        Spannable WordtoSpan = new SpannableString(translationView.getText());
+        for(int ofs = 0; ofs < mainText.length() && selTextIndex != -1; ofs = selTextIndex + 1) {
             selTextIndex = mainText.indexOf(textToSelect, ofs);
             if(selTextIndex == -1)
                 break;
-            else
-            {
-                WordtoSpan.
-                        setSpan(
+            else {
+                WordtoSpan.setSpan(
                                 new BackgroundColorSpan(R.color.colorAccent),
                                 selTextIndex,
                                 selTextIndex+textToSelect.length(),
                                 Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
                         );
-                translationView
-                        .setText(WordtoSpan, TextView.BufferType.SPANNABLE);
+                translationView.setText(WordtoSpan, TextView.BufferType.SPANNABLE);
             }
         }
 

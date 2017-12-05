@@ -24,7 +24,7 @@
             android:textColor="@color/white"
             android:id="@+id/dialog_cancel"
             android:layout_height="match_parent"
-            android:text="Ok"
+            android:text="@string/ok"
             android:background="@drawable/buttot_round"
             android:layout_width="match_parent" />
 

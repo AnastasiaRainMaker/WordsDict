@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/learning_main_constraint"
     android:layout_width="fill_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -16,7 +15,7 @@
         android:layout_marginTop="8dp"
         android:fontFamily="@font/custom_font3"
         android:gravity="center"
-        android:text="Для изучения необходимо добавить слова в справочник. Для этого воспользуйтесь быстрым переводом."
+        android:text="@string/no_words_for_learning"
         android:textAlignment="center"
         android:textColor="@color/colorPrimaryDark"
         android:textColorHighlight="@color/colorAccent"
@@ -26,39 +25,6 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/learning_donexfromy_textview" />
-
-
-    <!--<Button-->
-    <!--android:fontFamily="@font/custom_font3"-->
-    <!--android:id="@+id/learning_skip_button"-->
-    <!--android:layout_width="0dp"-->
-    <!--android:layout_height="60dp"-->
-    <!--android:layout_marginBottom="4dp"-->
-    <!--android:layout_marginEnd="8dp"-->
-    <!--android:layout_marginStart="4dp"-->
-    <!--android:background="@drawable/buttot_round"-->
-    <!--android:text="Пропустить"-->
-    <!--android:textColor="@color/white"-->
-    <!--android:textSize="14sp"-->
-    <!--app:layout_constraintBottom_toTopOf="@+id/learning_up_word_button"-->
-    <!--app:layout_constraintEnd_toEndOf="parent"-->
-    <!--app:layout_constraintStart_toStartOf="@+id/guideline7" />-->
-
-    <!--<Button-->
-    <!--android:fontFamily="@font/custom_font3"-->
-    <!--android:id="@+id/learning_check_button"-->
-    <!--android:layout_width="0dp"-->
-    <!--android:layout_height="60dp"-->
-    <!--android:layout_marginBottom="4dp"-->
-    <!--android:layout_marginEnd="4dp"-->
-    <!--android:layout_marginStart="8dp"-->
-    <!--android:background="@drawable/buttot_round"-->
-    <!--android:text="Проверить"-->
-    <!--android:textColor="@color/white"-->
-    <!--android:textSize="14sp"-->
-    <!--app:layout_constraintBottom_toTopOf="@+id/learning_show_translation_button"-->
-    <!--app:layout_constraintEnd_toStartOf="@+id/guideline7"-->
-    <!--app:layout_constraintStart_toStartOf="parent" />-->
 
     <EditText
         android:id="@+id/learning_translationedittext"
@@ -76,40 +42,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/learning_donexfromy_textview" />
 
-    <!--<Button-->
-    <!--android:fontFamily="@font/custom_font3"-->
-    <!--android:id="@+id/learning_show_translation_button"-->
-    <!--android:layout_width="0dp"-->
-    <!--android:layout_height="50dp"-->
-    <!--android:layout_marginBottom="4dp"-->
-    <!--android:layout_marginEnd="4dp"-->
-    <!--android:layout_marginStart="8dp"-->
-    <!--android:background="@drawable/buttot_round"-->
-    <!--android:text="Показать перевод"-->
-    <!--android:textColor="@color/white"-->
-    <!--android:textSize="12sp"-->
-    <!--app:layout_constraintBottom_toBottomOf="parent"-->
-    <!--app:layout_constraintEnd_toStartOf="@+id/guideline7"-->
-    <!--app:layout_constraintStart_toStartOf="parent" />-->
-
-    <!--<Button-->
-    <!--android:fontFamily="@font/custom_font3"-->
-    <!--android:id="@+id/learning_up_word_button"-->
-    <!--android:layout_width="0dp"-->
-    <!--android:layout_height="50dp"-->
-    <!--android:layout_marginBottom="4dp"-->
-    <!--android:layout_marginEnd="8dp"-->
-    <!--android:layout_marginStart="4dp"-->
-    <!--android:background="@drawable/buttot_round"-->
-    <!--android:text="@string/learning_up_priority"-->
-    <!--android:textColor="@color/white"-->
-    <!--android:textSize="12sp"-->
-    <!--app:layout_constraintBottom_toBottomOf="parent"-->
-    <!--app:layout_constraintEnd_toEndOf="parent"-->
-    <!--app:layout_constraintStart_toStartOf="@+id/guideline7" />-->
-
     <android.support.constraint.Guideline
-        android:id="@+id/guideline7"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -122,7 +55,7 @@
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:text="Введите перевод:"
+        android:text="@string/enter_trans"
         android:textColor="@color/colorAccent"
 
         app:layout_constraintBottom_toTopOf="@+id/learning_translationedittext"
@@ -137,7 +70,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:fontFamily="@font/custom_font3"
-        android:text="done x from y"
+        android:text="@string/done_x_from_y"
         android:textColor="@color/colorAccent"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"

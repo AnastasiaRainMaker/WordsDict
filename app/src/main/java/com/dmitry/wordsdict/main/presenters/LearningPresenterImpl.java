@@ -2,38 +2,28 @@ package com.dmitry.wordsdict.main.presenters;
 
 import android.content.Context;
 import android.content.Intent;
-
 import com.dmitry.wordsdict.Constants;
 import com.dmitry.wordsdict.main.interactors.LearningInteractorImpl;
 import com.dmitry.wordsdict.main.views.LearningView;
 import com.dmitry.wordsdict.main.views.TranslationActivity;
 import com.dmitry.wordsdict.model.WordModelRealm;
-
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Random;
-import java.util.regex.Pattern;
-
 import io.realm.Realm;
 import io.realm.RealmResults;
-
-/**
- * Created by dmitry on 6/11/17.
- */
 
 public class LearningPresenterImpl implements LearningPresenter {
 
     private LearningView learningView;
     private Realm mRealm;
-    private LearningInteractorImpl learningInteractorImpl;
     private RealmResults<WordModelRealm> resWords;
     private ArrayList<Integer> completedWords;
     private Random mRand;
 
     public LearningPresenterImpl(LearningView learningView, LearningInteractorImpl learningInteractorImpl) {
         this.learningView = learningView;
-        this.learningInteractorImpl = learningInteractorImpl;
         mRealm = Realm.getDefaultInstance();
         resWords = learningInteractorImpl.findWords(mRealm);
         completedWords = new ArrayList<>();
@@ -104,7 +94,7 @@ public class LearningPresenterImpl implements LearningPresenter {
                 }
             }
         } catch (Exception e) {
-            learningView.showError("Ошибка чтения БД");
+            learningView.showError("Ошибка чтения базы данных");
             e.printStackTrace();
         }
 

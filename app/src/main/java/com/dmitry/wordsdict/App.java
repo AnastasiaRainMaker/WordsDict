@@ -14,7 +14,6 @@ import io.realm.annotations.RealmModule;
 public class App extends Application {
 
     private RxEventBus bus;
-    public static RealmConfiguration realmConfig;
 
     @Override
     public void onCreate() {
@@ -22,7 +21,7 @@ public class App extends Application {
 
         Realm.init(this);
 
-        realmConfig = new RealmConfiguration.Builder()
+        RealmConfiguration realmConfig = new RealmConfiguration.Builder()
                 .name("userWords.realm")
                 .schemaVersion(8)
                 .migration(new Migration())

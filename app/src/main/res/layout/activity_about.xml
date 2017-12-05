@@ -7,15 +7,13 @@
     tools:context="com.dmitry.wordsdict.main.views.AboutActivity">
 
     <TextView
-        android:id="@+id/textView3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="24dp"
         android:fontFamily="@font/custom_font3"
-        android:text='Приложение "Ultimate vocabulary" - помощник в переводе слов как с русского языка на английский,так и с английского на русский. При переводе слова автоматически сохраняются в пользовательский словарь и доступны для дальнейшего просмотра и изучения.
-        Для расширенного перевода используется словарь www.multitran.ru. Доступны несколько режимов обучения,  а также возможность сохранения и загрузки базы данных слов.'
+        android:text="@string/app_descr"
         android:textAlignment="center"
         android:textColor="@color/colorPrimaryDark"
         android:textSize="18sp"

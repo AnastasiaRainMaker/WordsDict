@@ -1,6 +1,8 @@
 package com.dmitry.wordsdict.main.views;
 
 import android.app.Dialog;
+import android.content.Context;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
@@ -15,36 +17,26 @@ import com.dmitry.wordsdict.main.presenters.ListWordsPresenterImpl;
 
 public class FragmentListWords extends Fragment implements ListWordsView {
 
-    private RecyclerView recycler;
-    private ListWordsPresenterImpl listWordsPresenterImpl;
+    private MenuActivity mActivity;
 
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        mActivity = (MenuActivity) context;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.view_words_list,
                 container, false);
-        recycler = view.findViewById(R.id.recycler_words_list);
-        listWordsPresenterImpl = new ListWordsPresenterImpl(this,
+        RecyclerView recycler = view.findViewById(R.id.recycler_words_list);
+        ListWordsPresenterImpl listWordsPresenterImpl = new ListWordsPresenterImpl(this,
                 new ListWordsInteractorImpl());
         listWordsPresenterImpl.setUpRecyclerView(getActivity(), recycler);
+        mActivity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_NOSENSOR);
 
         return view;
-    }
-
-    @Override
-    public void setUpMenu() {
-
-    }
-
-    @Override
-    public void showProgress() {
-
-    }
-
-    @Override
-    public void hideProgress() {
-
     }
 
     @Override
