@@ -101,9 +101,7 @@ public class TranslateWordInteractorImpl implements TranslateWordInteractor {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
-                        res -> {
-                            listener.onTranslationFinished(res, word, false);
-                        },
+                        res -> listener.onTranslationFinished(res, word, false),
                         throwable -> listener.onTranslationError("Не найдено")
                 );
     }

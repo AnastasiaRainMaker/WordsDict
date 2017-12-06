@@ -1,6 +1,5 @@
 package com.dmitry.wordsdict.main.adapters;
 
-
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
@@ -69,11 +68,9 @@ public class RealmWordsListAdapter extends RealmRecyclerViewAdapter<WordModelRea
         holder.frequency.setText(String.format(
                 activity.getResources().getString(R.string.word_frequency_text),
                 obj != null ? obj.getWordFrequency() : ""));
-        holder.itemView.setOnClickListener((v -> {
-            activity.startActivity(new Intent(activity, TranslationActivity.class)
-                    .putExtra("translation", obj != null ? obj.getWordTranslation() : "")
-                    .putExtra("word", obj != null ? obj.getWordName() : ""));
-        }));
+        holder.itemView.setOnClickListener((v -> activity.startActivity(new Intent(activity, TranslationActivity.class)
+                .putExtra("translation", obj != null ? obj.getWordTranslation() : "")
+                .putExtra("word", obj != null ? obj.getWordName() : ""))));
         holder.itemView.setOnLongClickListener(v-> {
             if (mActionMode != null) {
                 return false;
@@ -104,10 +101,10 @@ public class RealmWordsListAdapter extends RealmRecyclerViewAdapter<WordModelRea
     }
 
     class MyViewHolder extends RecyclerView.ViewHolder {
-        TextView title;
-        TextView frequency;
-        TextView date;
-        TextView priority;
+        private TextView title;
+        private TextView frequency;
+        private TextView date;
+        private TextView priority;
         public WordModelRealm data;
 
         MyViewHolder(View view) {
@@ -136,23 +133,25 @@ public class RealmWordsListAdapter extends RealmRecyclerViewAdapter<WordModelRea
 
         @Override
         public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+            WordModelRealm mItem = getItem(selectedItem);
+            if (mItem == null) return false;
             switch (item.getItemId()) {
                 case R.id.context_delete:
-                    mRealm.executeTransaction(realm -> getItem(selectedItem).deleteFromRealm());
+                    mRealm.executeTransaction(realm -> mItem.deleteFromRealm());
                     handleMenuFinish(mode);
                     return true;
                 case R.id.context_word_difficalty_up:
                     mRealm.executeTransaction(realm -> {
-                        getItem(selectedItem).setWordPriority(getItem(selectedItem).getWordPriority() + 1);
-                        getItem(selectedItem).setSelected(false);
+                        mItem.setWordPriority(mItem.getWordPriority() + 1);
+                        mItem.setSelected(false);
                     });
                     handleMenuFinish(mode);
                     return true;
                 case R.id.context_word_difficalty_down:
                     mRealm.executeTransaction(realm -> {
-                        if (getItem(selectedItem).getWordPriority() > 0)
-                            getItem(selectedItem).setWordPriority(getItem(selectedItem).getWordPriority() - 1);
-                        getItem(selectedItem).setSelected(false);
+                        if (mItem.getWordPriority() > 0)
+                            mItem.setWordPriority(mItem.getWordPriority() - 1);
+                        mItem.setSelected(false);
                     });
                     handleMenuFinish(mode);
                     return true;
@@ -162,7 +161,7 @@ public class RealmWordsListAdapter extends RealmRecyclerViewAdapter<WordModelRea
         }
 
 
-        private void handleMenuFinish(ActionMode mode){
+        public void handleMenuFinish(ActionMode mode){
             deselectAll();
             notifyItemChanged(selectedItem);
             selectedItem = null;
@@ -171,12 +170,20 @@ public class RealmWordsListAdapter extends RealmRecyclerViewAdapter<WordModelRea
 
         @Override
         public void onDestroyActionMode(ActionMode mode) {
-            mActionMode = null;
-            if (selectedItem != null){
-                mRealm.executeTransaction(realm -> getItem(selectedItem).setSelected(false));
-                selectedItem = null;
-                notifyDataSetChanged();
+            WordModelRealm mItem = getItem(selectedItem);
+            if (mItem != null) {
+                mActionMode = null;
+                if (selectedItem != null) {
+                    mRealm.executeTransaction(realm -> mItem.setSelected(false));
+                    selectedItem = null;
+                    notifyDataSetChanged();
+                }
             }
         }
     };
+
+    public void menuFinish(){
+        mActionMode.finish();
+    }
+
 }

@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-
 import com.dmitry.wordsdict.main.adapters.DividerItemDecoration;
 import com.dmitry.wordsdict.main.adapters.RealmWordsListAdapter;
 import com.dmitry.wordsdict.main.interactors.ListWordsInteractorImpl;
@@ -15,6 +14,7 @@ import io.realm.Realm;
 public class ListWordsPresenterImpl implements ListWordsPresenter {
 
     private ListWordsInteractorImpl listWordsInteractorImpl;
+    private RealmWordsListAdapter mAdapter;
     private ListWordsView listWordsView;
     private enum LayoutManagerType {
         GRID_LAYOUT_MANAGER,
@@ -61,17 +61,24 @@ public class ListWordsPresenterImpl implements ListWordsPresenter {
         mRecyclerView.addItemDecoration(new DividerItemDecoration(activity, DividerItemDecoration.VERTICAL_LIST));
     }
 
+    @SuppressWarnings("ConstantConditions")
     @Override
     public void setUpRecyclerView(Activity activity, RecyclerView recycler) {
         mLayoutManager = new LinearLayoutManager(activity);
         mCurrentLayoutManagerType = LayoutManagerType.LINEAR_LAYOUT_MANAGER;
         setRecyclerViewLayoutManager(mCurrentLayoutManagerType, recycler, activity);
-        RealmWordsListAdapter mAdapter = listWordsInteractorImpl.setUpListWordsAdapter(activity, mRealm);
+        mAdapter = listWordsInteractorImpl.setUpListWordsAdapter(activity, mRealm);
         if (mAdapter.getData().size() == 0) {
             listWordsView.showError("Словарь пуст. Для добавления слов воспользуйтесь быстрым переводом");
         }
         recycler.setAdapter(mAdapter);
         recycler.setHasFixedSize(true);
+    }
+
+    public void finishMenu(){
+        if (mAdapter != null) {
+            mAdapter.menuFinish();
+        }
     }
 
 }

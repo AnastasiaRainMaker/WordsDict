@@ -43,7 +43,6 @@ import static com.dmitry.wordsdict.Constants.REQ_CODE;
 
 public class MenuActivity extends AppCompatActivity {
 
-    private Toolbar mainToolbar;
     private BottomNavigationView bottomNavigationView;
     private final int FILE_SELECT_CODE = 0;
 
@@ -53,7 +52,7 @@ public class MenuActivity extends AppCompatActivity {
         setContentView(R.layout.activity_menu);
         bottomNavigationView = findViewById(R.id.bottom_navigation);
         applyBottomNavFont();
-        mainToolbar = findViewById(R.id.toolbar_main);
+        Toolbar mainToolbar = findViewById(R.id.toolbar_main);
         setSupportActionBar(mainToolbar);
 
         Fragment fr = getSupportFragmentManager().findFragmentById(R.id.menu_frame);

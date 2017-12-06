@@ -2,9 +2,7 @@ package com.dmitry.wordsdict.main.interactors;
 
 import com.dmitry.wordsdict.Constants;
 import com.dmitry.wordsdict.model.WordModelRealm;
-
 import java.util.Date;
-
 import io.realm.Realm;
 import io.realm.RealmObject;
 
@@ -38,6 +36,7 @@ public class SaveWordInteractorImpl implements SaveWordInteractor{
         } else {
             mRealm.executeTransaction(realm -> {
                 WordModelRealm riWord = realm.where(WordModelRealm.class).equalTo(Constants.REALM_WORD_NAME_KEY, word).findFirst();
+                assert riWord != null;
                 riWord.setWordFrequency(riWord.getWordFrequency() + 1);
                 riWord.setCreationDate(new Date());
                 String oldTranslation = riWord.getWordTranslation();

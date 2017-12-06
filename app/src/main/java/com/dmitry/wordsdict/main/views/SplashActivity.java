@@ -7,13 +7,11 @@ import com.dmitry.wordsdict.R;
 
 public class SplashActivity extends Activity implements Runnable {
 
-   private Thread mThread;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.splash);
-        mThread = new Thread(this);
+        Thread mThread = new Thread(this);
         mThread.start();
     }
 

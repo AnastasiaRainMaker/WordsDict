@@ -5,13 +5,8 @@ import android.app.Activity;
 import com.dmitry.wordsdict.Constants;
 import com.dmitry.wordsdict.main.adapters.RealmWordsListAdapter;
 import com.dmitry.wordsdict.model.WordModelRealm;
-
 import io.realm.Realm;
 import io.realm.Sort;
-
-/**
- * Created by dmitry on 6/3/17.
- */
 
 public class ListWordsInteractorImpl implements ListWordsInteractor {
     @Override

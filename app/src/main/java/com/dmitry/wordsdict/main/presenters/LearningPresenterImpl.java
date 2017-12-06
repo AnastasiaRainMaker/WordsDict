@@ -31,11 +31,6 @@ public class LearningPresenterImpl implements LearningPresenter {
     }
 
     @Override
-    public void onResume() {
-
-    }
-
-    @Override
     public RealmResults<WordModelRealm> getWords() {
         return resWords;
     }
@@ -63,6 +58,7 @@ public class LearningPresenterImpl implements LearningPresenter {
         } else {
             completedWords.add(randomIndex);
             WordModelRealm word = resWords.get(randomIndex);
+            assert word != null;
             learningView.loadNextWord(
                     word.getWordName(),
                     "",
@@ -106,6 +102,7 @@ public class LearningPresenterImpl implements LearningPresenter {
 
     }
 
+    @SuppressWarnings("ConstantConditions")
     @Override
     public boolean isTranslationCorrect(String userValue, String word) {
         String correctTranslation = mRealm
@@ -117,6 +114,7 @@ public class LearningPresenterImpl implements LearningPresenter {
         return truncateTranslation(correctTranslation).contains(userValue);
     }
 
+    @SuppressWarnings("ConstantConditions")
     @Override
     public void showTranslation(String word, Context mContext) {
         String translation = mRealm
@@ -137,6 +135,7 @@ public class LearningPresenterImpl implements LearningPresenter {
                     .where(WordModelRealm.class)
                     .equalTo(Constants.REALM_WORD_NAME_KEY, word)
                     .findFirst();
+            assert rWord != null;
             res[0] = rWord.getWordPriority() + 1;
             rWord.setWordPriority(res[0]);
         });
