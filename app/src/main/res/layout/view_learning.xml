@@ -78,7 +78,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
 
-    <android.support.design.widget.BottomNavigationView
+    <com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx
         android:id="@+id/bottom_navigation_learning"
         android:layout_width="match_parent"
         android:layout_height="65dp"

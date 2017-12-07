@@ -40,7 +40,7 @@
             android:padding="16dp"
             android:layout_weight="1"
             android:textAlignment="center"
-            android:background="@drawable/buttot_round"
+            android:background="@drawable/button_round"
             android:layout_width="match_parent" />
 
     </LinearLayout>

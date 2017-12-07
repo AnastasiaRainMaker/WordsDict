@@ -63,7 +63,7 @@
         <!--android:layout_height="wrap_content"-->
         <!--android:layout_marginEnd="8dp"-->
         <!--android:layout_marginStart="8dp"-->
-        <!--android:background="@drawable/buttot_round"-->
+        <!--android:background="@drawabutton_roundound"-->
         <!--android:textColor="@color/white"-->
         <!--android:text="@string/title_open_dictionary"-->
         <!--app:layout_constraintEnd_toEndOf="parent"-->
@@ -79,7 +79,7 @@
         <!--android:layout_height="wrap_content"-->
         <!--android:layout_marginEnd="8dp"-->
         <!--android:layout_marginStart="8dp"-->
-        <!--android:background="@drawable/buttot_round"-->
+        <!--android:background="@drawabutton_roundound"-->
         <!--android:textColor="@color/white"-->
         <!--android:text="@string/title_fast_translation"-->
         <!--app:layout_constraintEnd_toEndOf="parent"-->
@@ -92,7 +92,7 @@
         <!--android:layout_width="0dp"-->
         <!--android:layout_height="wrap_content"-->
         <!--android:layout_marginEnd="8dp"-->
-        <!--android:background="@drawable/buttot_round"-->
+        <!--android:background="@drawabutton_roundound"-->
         <!--android:textColor="@color/white"-->
         <!--android:layout_marginStart="8dp"-->
         <!--android:layout_marginTop="36dp"-->

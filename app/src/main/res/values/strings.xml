@@ -27,7 +27,6 @@
     <string name="learning">Обучение</string>
     <string name="my_dictionary">Мой словарь</string>
     <string name="random_words">Случайные слова</string>
-    <string name="enter_word">Введите слово</string>
     <string name="enter_words">Введите слово</string>
     <string name="ok">OK</string>
     <string name="adv_search">Расширенный поиск</string>
@@ -35,7 +34,6 @@
     <string name="find_more">Искать еще</string>
     <string name="enter_trans">Введите перевод:</string>
     <string name="no_words_for_learning">Для изучения необходимо добавить слова в справочник. Для этого воспользуйтесь быстрым переводом.</string>
-    <string name="enter_translation">Введите перевод:</string>
     <string name="done_x_from_y">done x from y</string>
     <string name="name">name</string>
 </resources>

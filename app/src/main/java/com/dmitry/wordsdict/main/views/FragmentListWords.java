@@ -7,14 +7,12 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
-import android.view.ActionMode;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 import com.dmitry.wordsdict.R;
-import com.dmitry.wordsdict.main.adapters.RealmWordsListAdapter;
 import com.dmitry.wordsdict.main.interactors.ListWordsInteractorImpl;
 import com.dmitry.wordsdict.main.presenters.ListWordsPresenterImpl;
 

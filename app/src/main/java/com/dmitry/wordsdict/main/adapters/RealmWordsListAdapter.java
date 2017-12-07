@@ -95,11 +95,6 @@ public class RealmWordsListAdapter extends RealmRecyclerViewAdapter<WordModelRea
         }
     }
 
-    @Override
-    public long getItemId(int index) {
-        return getItem(index).getWordId();
-    }
-
     class MyViewHolder extends RecyclerView.ViewHolder {
         private TextView title;
         private TextView frequency;
@@ -182,8 +177,10 @@ public class RealmWordsListAdapter extends RealmRecyclerViewAdapter<WordModelRea
         }
     };
 
-    public void menuFinish(){
-        mActionMode.finish();
+    public void menuFinish() {
+        if (mActionMode != null) {
+            mActionMode.finish();
+        }
     }
 
 }
