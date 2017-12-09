@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context="com.dmitry.wordsdict.main.views.MenuActivity"
+    tools:context="com.project.wordsdict.main.views.MenuActivity"
     android:orientation="vertical"
     >
 
@@ -54,7 +54,7 @@
     <!--android:layout_width="match_parent"-->
 
     <!--android:layout_height="match_parent"-->
-    <!--tools:context="com.dmitry.wordsdict.main.views.MenuActivity">-->
+    <!--tools:conteprojecttitry.wordsdict.main.views.MenuActivity">-->
 
 
     <!--<Button-->
