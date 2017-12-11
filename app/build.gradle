@@ -2,6 +2,15 @@ apply plugin: 'com.android.application'
 apply plugin: 'realm-android'
 
 android {
+    signingConfigs {
+        release {
+            storeFile file("/home/anastasia/Android/mainKeystore.jks")
+            storePassword "G1stellarjam"
+            keyAlias "MyAndroidKey"
+            keyPassword "K1stellarjam"
+        }
+    }
+
     compileSdkVersion 27
     buildToolsVersion "27.0.1"
     defaultConfig {
@@ -15,8 +24,12 @@ android {
     }
     buildTypes {
         release {
+            signingConfig signingConfigs.release
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            signingConfig signingConfigs.release
         }
     }
     compileOptions {

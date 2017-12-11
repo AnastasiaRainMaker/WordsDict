@@ -40,6 +40,7 @@ import io.realm.RealmObject;
 import io.realm.RealmResults;
 
 import static com.project.wordsdict.Constants.REQ_CODE;
+import static com.project.wordsdict.Constants.REQ_CODE2;
 
 public class MenuActivity extends AppCompatActivity {
 
@@ -127,7 +128,7 @@ public class MenuActivity extends AppCompatActivity {
                 return true;
 
             case R.id.action_send:
-                setUpLoadFromFile();
+                getUserPermission2();
                 return true;
 
             case R.id.action_about:
@@ -289,7 +290,11 @@ public class MenuActivity extends AppCompatActivity {
 
     private void getUserPermission(){
 
-        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE}, REQ_CODE);
+        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQ_CODE);
+    }
+    private void getUserPermission2(){
+
+        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, REQ_CODE2);
     }
 
     private void setUpExportButton() {
@@ -334,6 +339,13 @@ public class MenuActivity extends AppCompatActivity {
             case REQ_CODE: {
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 setUpExportButton();
+                } else {
+                    Toast.makeText(this, this.getResources().getString(R.string.error_can_not_write_file), Toast.LENGTH_SHORT).show();
+                }
+            }
+            case REQ_CODE2: {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    setUpLoadFromFile();
                 } else {
                     Toast.makeText(this, this.getResources().getString(R.string.error_can_not_write_file), Toast.LENGTH_SHORT).show();
                 }

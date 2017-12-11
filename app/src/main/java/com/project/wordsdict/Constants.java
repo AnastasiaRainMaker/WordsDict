@@ -13,5 +13,6 @@ public final class Constants {
     public static final String REALM_WORD_DATE_KEY = "creationDate";
     public static final java.lang.String ASSET_DICT_NAME = "endict.txt";
     public static final int REQ_CODE = 235;
+    public static final int REQ_CODE2 = 2235;
 
 }
