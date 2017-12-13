@@ -11,8 +11,12 @@ public interface TranslateWordInteractor {
     interface OnFinishedListener {
         void onTranslationFinished(String translation, String word, Boolean isAdvSearch);
         void onTranslationError(String text);
+        void onGetHintFinished(String hint, String word);
+        void onGetHintError(String text);
     }
 
     Disposable translateWord(OnFinishedListener listener, String word);
+
+    Disposable getHint (OnFinishedListener listener, String word);
 
 }

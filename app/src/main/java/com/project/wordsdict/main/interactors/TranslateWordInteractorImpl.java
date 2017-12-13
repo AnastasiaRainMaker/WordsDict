@@ -14,6 +14,7 @@ import io.realm.Realm;
 import io.realm.RealmConfiguration;
 import io.realm.RealmResults;
 import static com.project.wordsdict.Constants.MULTITRAN_CSS_SELECTOR;
+import static com.project.wordsdict.Constants.MULTITRAN_CSS_SELECTOR_HINT;
 import static com.project.wordsdict.Constants.MULTITRAN_URL_RUS;
 import static com.project.wordsdict.Constants.TAG;
 
@@ -30,7 +31,8 @@ public class TranslateWordInteractorImpl implements TranslateWordInteractor {
     public TranslateWordInteractorImpl(Context mContext) {
     }
 
-    @Override public Disposable translateWord (final OnFinishedListener listener, String word) {
+    @Override
+    public Disposable translateWord (final OnFinishedListener listener, String word) {
         if (word.length() > 0) {
             return Single.fromCallable(()-> Jsoup.connect(String.format(MULTITRAN_URL_RUS, word)).get())
                     .subscribeOn(Schedulers.io())
@@ -54,22 +56,52 @@ public class TranslateWordInteractorImpl implements TranslateWordInteractor {
 
      }
 
-    @Override public Disposable translateWordRus(final OnFinishedListener listener, String word) {
+    @Override
+    public Disposable translateWordRus(final OnFinishedListener listener, String word) {
         return Single.fromCallable(()-> Jsoup.connect(String.format(MULTITRAN_URL_RUS, word)).get())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                         res -> {
                             Element elemBody = res.body();
-                            String translation;
-                            translation = elemBody.select(MULTITRAN_CSS_SELECTOR).text();
+                            String translation = elemBody.select(MULTITRAN_CSS_SELECTOR).text();
                             listener.onTranslationFinished(translation, word, true);
                         },
                         throwable -> listener.onTranslationError(throwable.getMessage())
                 );
     }
 
-    @Override public Disposable translateWordOffline(final OnFinishedListener listener, String word) {
+    @Override
+    public Disposable getHint(final OnFinishedListener listener, String word) {
+        if (word.length() > 0) {
+            return Single.fromCallable(()-> Jsoup.connect(String.format(MULTITRAN_URL_RUS, word)).get())
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(
+                            res -> {
+                                Element elemBody = res.body();
+                                String hint = elemBody.select(MULTITRAN_CSS_SELECTOR_HINT).text();
+                                listener.onGetHintFinished(hint, word);
+                            },
+                            throwable -> listener.onGetHintError(throwable.getMessage())
+                    );
+        } else {
+            return Single.fromCallable(()-> "Введено пустое значение")
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(
+                            res -> listener.onGetHintFinished(res, word),
+                            throwable -> {
+                                listener.onGetHintError("Сервер временно недоступен.");
+                                Log.d(TAG, throwable.getMessage());
+                            }
+                    );
+        }
+    }
+
+
+    @Override
+    public Disposable translateWordOffline(final OnFinishedListener listener, String word) {
         return Single.fromCallable(()-> {
             if (word.length() == 0) {
                 return "Введено пустое значение";

@@ -10,7 +10,11 @@ import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.text.Spannable;
 import android.text.SpannableString;
+import android.text.SpannableStringBuilder;
+import android.text.method.LinkMovementMethod;
+import android.text.method.ScrollingMovementMethod;
 import android.text.style.BackgroundColorSpan;
+import android.text.style.ClickableSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,7 +30,7 @@ import com.project.wordsdict.main.interactors.TranslateWordInteractorImpl;
 public class FragmentMenu extends Fragment implements MainView, View.OnClickListener {
 
     private TranslatePresenterImpl translatePresenter;
-    private EditText translationEditText;
+    private TextView translationEditText;
     private EditText wordEditText;
     private TextView wordTextView;
     private Button advancedTranslateButton;
@@ -56,6 +60,7 @@ public class FragmentMenu extends Fragment implements MainView, View.OnClickList
         advancedTranslateButton = view.findViewById(R.id.advanced_search_button);
         advancedTranslateButton.setOnClickListener(this);
         advancedTranslateButton.setVisibility(View.GONE);
+        translationEditText.setMovementMethod(new ScrollingMovementMethod());
         translatePresenter = new TranslatePresenterImpl(this,
                 new TranslateWordInteractorImpl(getContext()),
                 new SaveWordInteractorImpl());
@@ -131,10 +136,44 @@ public class FragmentMenu extends Fragment implements MainView, View.OnClickList
                         selTextIndex + textToSelect.length(),
                         Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
                 );
+                wordTextView.setText(word);
+                wordTextView.setTextSize(26);
+                translationEditText.setLineSpacing(0.0f,1.0f);
                 translationEditText.setText(WordtoSpan, TextView.BufferType.SPANNABLE);
                 translationEditText.setBackgroundResource(R.color.background_main_color);
+                translationEditText.setTextSize(19);
 
             }
+        }
+    }
+
+    @Override
+    public void showHint(String hint) {
+        if (hint.length() > 0) {
+            advancedTranslateButton.setVisibility(View.GONE);
+            wordTextView.setText("Возможно Вы имели ввиду:");
+            wordTextView.setTextSize(17);
+
+            String[] arr = hint.split("; ");
+            SpannableStringBuilder fullHint = new SpannableStringBuilder();
+            for (String w : arr) {
+                ClickableSpan clickableSpan = new ClickableSpan() {
+                    @Override
+                    public void onClick(View textView) {
+                        word = w;
+                        translatePresenter.onAdvancedTranslateButtonClicked(word);
+                        advancedBtnShow = false;
+                    }
+                };
+                fullHint.append(w + ";" + "\r\r", clickableSpan, 0);
+            }
+            translationEditText.setText(fullHint);
+            translationEditText.setTextSize(21);
+            translationEditText.setLineSpacing(0.0f,1.8f);
+            translationEditText.setMovementMethod(LinkMovementMethod.getInstance());
+        } else {
+            translationEditText.setText("Не найдено");
+            advancedTranslateButton.setVisibility(View.GONE);
         }
     }
 
@@ -180,9 +219,12 @@ public class FragmentMenu extends Fragment implements MainView, View.OnClickList
             case R.id.button_main_do_translate: {
                 word = String.format("%s", wordEditText.getText());
                 translatePresenter.onTranslateButtonClicked(word);
+                translationEditText.setLineSpacing(0.0f,1.0f);
+                translationEditText.setTextSize(21);
                 if (wordTextView != null)
                 wordTextView.setText(word);
                 translationEditText.setBackgroundResource(R.color.white);
+                wordTextView.setTextSize(26);
                 wordEditText.setText("");
                 break;
             }

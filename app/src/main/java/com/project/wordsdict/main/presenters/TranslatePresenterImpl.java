@@ -59,13 +59,27 @@ public class TranslatePresenterImpl implements TranslatePresenter, TranslateWord
                 }
                 mainView.showTranslation(translation, isAdvSearch);
             } else {
-                mainView.showTranslation("Нет перевода", isAdvSearch);
+                mSubscriptions.add(translateWordInteractor.getHint(this, word));
             }
         }
     }
 
     @Override
     public void onTranslationError(String text) {
+        if (mainView != null) {
+            mainView.showError(text);
+            mainView.hideProgress();
+        }
+    }
+
+    @Override
+    public void onGetHintFinished(String hint, String word) {
+        mainView.showHint(hint);
+
+    }
+
+    @Override
+    public void onGetHintError(String text) {
         if (mainView != null) {
             mainView.showError(text);
             mainView.hideProgress();

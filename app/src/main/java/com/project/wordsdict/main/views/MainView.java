@@ -8,6 +8,8 @@ public interface MainView {
 
     void showTranslation(String translation, Boolean isAdvSearch);
 
+    void showHint(String hint);
+
     void showError(String text);
 
     void hideKeyBoard();
