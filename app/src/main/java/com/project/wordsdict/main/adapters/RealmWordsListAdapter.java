@@ -158,7 +158,6 @@ public class RealmWordsListAdapter extends RealmRecyclerViewAdapter<WordModelRea
         public void handleMenuFinish(ActionMode mode) {
             deselectAll();
             notifyItemChanged(selectedItem);
-            selectedItem = null;
             mode.finish();
         }
 

@@ -339,15 +339,19 @@ public class MenuActivity extends AppCompatActivity {
             case REQ_CODE: {
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 setUpExportButton();
+                break;
                 } else {
                     Toast.makeText(this, this.getResources().getString(R.string.error_can_not_write_file), Toast.LENGTH_SHORT).show();
+                    break;
                 }
             }
             case REQ_CODE2: {
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     setUpLoadFromFile();
+                    break;
                 } else {
                     Toast.makeText(this, this.getResources().getString(R.string.error_can_not_write_file), Toast.LENGTH_SHORT).show();
+                    break;
                 }
             }
         }
