@@ -34,6 +34,7 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileWriter;
+import java.io.InputStream;
 import java.io.Writer;
 import io.realm.Realm;
 import io.realm.RealmObject;
@@ -64,6 +65,7 @@ public class MenuActivity extends AppCompatActivity {
                     .replace(R.id.menu_frame, fragment)
                     .commit();
         }
+        mainToolbar.setOnLongClickListener(view -> false);
 
         bottomNavigationView.setOnNavigationItemSelectedListener(
                 item -> {
